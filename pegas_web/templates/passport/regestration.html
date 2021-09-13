@@ -32,72 +32,71 @@
                                         <h1 class="header__descr">Регистрация</h1>
                                     </div>
                                     <form class="registration__form registration__form_desktop" autocomplete="off"
-                                        action="https://passport.yandex.ru/registration" method="post">
+                                        action="{%url 'welcome'%}" method="post">{%csrf_token%}
                                         <div>
-                                            <div class="form__field field__error"><span
-                                                    class="Textinput Textinput_state_error Textinput_view_one-border Textinput_size_m"><input
-                                                        type="text" data-t="field:input-firstname" aria-invalid="true"
-                                                        autocomplete="off" class="Textinput-Control" id="firstname"
-                                                        name="firstname" value=""><span
-                                                        class="Textinput-Box"></span></span><label for="firstname"
-                                                    class="registration__label">Имя</label>
-                                                <div class="reg-field__popup" aria-live="polite">
-                                                    <div class="form__popup-error" data-t="name-error" role="alert">
-                                                        <div class="error-message">Пожалуйста, укажите имя</div>
-                                                    </div>
-                                                </div>
+                                            <div class="form__field">
+                                                <span class="Textinput Textinput_view_one-border Textinput_size_m">
+                                                    {{form1.first_name.errors}}
+                                                    {{form1.first_name}}
+                                                    <span class="Textinput-Box"></span>
+                                                </span>
+                                               
                                             </div>
-                                            <div class="form__field field__error"><span
-                                                    class="Textinput Textinput_state_error Textinput_view_one-border Textinput_size_m"><input
-                                                        type="text" data-t="field:input-lastname" aria-invalid="true"
-                                                        autocomplete="off" class="Textinput-Control" id="lastname"
-                                                        name="lastname" value=""><span
-                                                        class="Textinput-Box"></span></span><label for="lastname"
-                                                    class="registration__label">Фамилия</label><span
-                                                    class="Textinput Textinput_view_default Textinput_size_m g-hidden"><input
-                                                        type="text" data-t="field:input-surname" aria-invalid="false"
-                                                        autocomplete="off" class="Textinput-Control" id="surname"
-                                                        name="surname" value=""><span
-                                                        class="Textinput-Box"></span></span></div>
-                                            <div class="form__field form__field_wide"><span
-                                                    class="Textinput Textinput_view_one-border Textinput_size_m"><input
-                                                        type="text" data-t="field:input-login" aria-invalid="false"
-                                                        autocomplete="username" class="Textinput-Control" id="login"
-                                                        name="login" value=""><span
-                                                        class="Textinput-Box"></span></span><label for="login"
-                                                    class="registration__label">Придумайте логин</label></div>
+                                            <div class="form__field">
+                                                <span
+                                                    class="Textinput Textinput_view_one-border Textinput_size_m">
+                                                    {{form1.last_name.errors}}
+                                                    {{form1.last_name}}
+                                                        <span class="Textinput-Box"></span>
+                                                    </span>
+                                                    
+                                                </span>
+                                            </div>
+                                            <div class="form__field form__field_wide">
+                                                <span
+                                                    class="Textinput Textinput_view_one-border Textinput_size_m">
+                                                    {{form2.patronomic.errors}}
+                                                    {{form2.patronomic}}
+                                                        <span class="Textinput-Box"></span>
+                                                    </span>
+                                                    
+                                                </span>
+                                            </div>
+                                            <div class="form__field form__field_wide">
+                                                <span
+                                                    class="Textinput Textinput_view_one-border Textinput_size_m">
+                                                    {{form1.username.errors}}
+                                                    {{form1.username}}
+                                                        <span class="Textinput-Box"></span>
+                                                </span>
+                                            </div>
                                         </div>
                                         <div>
-                                            <div class="form__field field__password"><button
-                                                    class="field-type__toggler field-type-password"
+                                            <div class="form__field field__password">
+                                                <button  class="field-type__toggler field-type-password"
                                                     title="Показать текст пароля" tabindex="2" type="button">Показать
-                                                    текст пароля</button><span
-                                                    class="Textinput Textinput_view_one-border Textinput_size_m"><input
-                                                        type="password" data-t="field:input-password"
-                                                        aria-invalid="false" autocomplete="new-password"
-                                                        class="Textinput-Control" id="password" name="password" value=""
-                                                        aria-autocomplete="list"><span
-                                                        class="Textinput-Box"></span></span><label for="password"
-                                                    class="registration__label">Придумайте пароль</label></div>
+                                                    текст пароля</button>
+                                                <span class="Textinput Textinput_view_one-border Textinput_size_m">
+                                                    {{form1.password1.errors}}
+                                                    {{form1.password1}}
+                                                    <span class="Textinput-Box"></span>
+                                                </span>
+                                            </div>
                                             <div class="form__field"><span
-                                                    class="Textinput Textinput_view_one-border Textinput_size_m"><input
-                                                        type="password" data-t="field:input-password_confirm"
-                                                        aria-invalid="false" autocomplete="new-password"
-                                                        class="Textinput-Control" id="password_confirm"
-                                                        name="password_confirm" value=""><span
-                                                        class="Textinput-Box"></span></span><label
-                                                    for="password_confirm" class="registration__label">Повторите
-                                                    пароль</label></div>
+                                                    class="Textinput Textinput_view_one-border Textinput_size_m">
+                                                    {{form1.password2.errors}}
+                                                    {{form1.password2}}
+                                                    <span
+                                                        class="Textinput-Box"></span></span></div>
                                         </div>
                                         <div class="human-confirmation-wrapper can-switch">
                                             <div class="phone__confirm-wrapper">
                                                 <div class="form__field"><span
-                                                        class="Textinput Textinput_view_one-border Textinput_size_m"><input
-                                                            data-t="field:input-phone" aria-invalid="false"
-                                                            autocomplete="off" class="Textinput-Control" id="phone"
-                                                            name="phone" type="tel" value=""><span
-                                                            class="Textinput-Box"></span></span><label for="phone"
-                                                        class="registration__label">Номер мобильного телефона</label>
+                                                        class="Textinput Textinput_view_one-border Textinput_size_m">
+                                                        {{form2.phone.errors}}
+                                                        {{form2.phone}}
+                                                        <span
+                                                            class="Textinput-Box"></span></span>
                                                 </div>
                                                 <div class="">
                                                     <div>

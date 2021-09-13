@@ -10,29 +10,16 @@
     <!--[if gt IE 7]><!-->
     <link xmlns:fn="http://www.w3.org/2005/02/xpath-functions" type="text/css" rel="stylesheet"
         href="{% static 'css/_messages_lite.css'%}">
+    <link xmlns:fn="http://www.w3.org/2005/02/xpath-functions" type="text/css" rel="stylesheet"
+        href="{% static 'css/_message_lite.css'%}">
     <!--<![endif]-->
     <!--[if lt IE 8]><link xmlns:fn="http://www.w3.org/2005/02/xpath-functions" type="text/css" rel="stylesheet" href="https://yastatic.net/s3/mail/lite/3.3.1/pages/messages/_messages_lite.ie.css"><![endif]-->
     <script type="text/javascript" async="" src="{% static 'scripts/watch.js'%}"></script>
     <script type="text/javascript" src="{% static 'scripts/context.js'%}" async=""></script>
-    <script type="text/javascript" nonce="">
-        document.documentElement.removeAttribute('id');
-        var PDA = window.PDA = {
-            uid: '723464561',
-            clientName: 'LITE',
-            clientVersion: '3.3.1',
-            connectionId: 'LITE-24905929-1631040535000'
-        };
-        PDA.device = {
-            OSFamily: 'Windows',
-            OSVersion: '10.0'
-        };
-    </script>
+
     <script charset="utf-8" src="{% static 'scripts/7327631eb8edafd80c8b.js'%}"
         crossorigin="anonymous" importance="high"></script>
     <script async="" crossorigin="anonymous" src="{% static 'scripts/host.js'%}"></script>
-    <link rel="preconnect" href="https://yastatic.net/">
-    <link rel="preconnect" href="https://avatars.mds.yandex.net/">
-    <link rel="preconnect" href="https://mc.yandex.ru/">
     <meta id="https://yastatic.net/partner-code-bundles/43320/context_static.js'%}">
     <link rel="preconnect" href="https://ads.adfox.ru/">
     <script charset="utf-8" src="{% static 'scripts/ff61137c5804d26e4aa0.js'%}"
@@ -82,7 +69,7 @@
             <div class="b-header__right" role="navigation" aria-label="Настройки"><a class="b-userpic b-userpic_small"
                     aria-hidden="true" role="presentation" tabindex="-1"
                     href="https://passport.yandex.ru/profile/avatars/"><img id="b-userpic__img"
-                        src="{% static 'img/small" alt="" class="b-userpic__img"
+                        src="{% static 'img/small'%}" alt="" class="b-userpic__img"
                         aria-hidden="true" role="presentation" tabindex="-1" style="display: none;">
                     <script type="text/javascript" nonce="">
                         document.getElementById('b-userpic__img').onerror = function () {
@@ -91,15 +78,21 @@
                     </script><i class="b-userpic__i"></i>
                 </a>
                 <div class="b-head-user">
+                    {% if user.is_authenticated %}
                     <div class="b-dropdown">
                         <ul class="b-dropdown__list" role="presentation">
-                            <li class="b-dropdown__item b-dropdown__visible"><a class="b-dropdown__or"
-                                    aria-label="ustin0we" href="https://passport.yandex.ru/profile/avatars/"><span
-                                        class="b-pseudo-link" aria-hidden="true" role="presentation"><b
-                                            class="b-user"><b class="b-user__first-letter">u</b>stin0we</b></span></a>
+                            <li class="b-dropdown__item b-dropdown__visible">
+                                <a class="b-dropdown__or" aria-label="ustin0we" href="https://passport.yandex.ru/profile/avatars/">
+                                    <span class="b-pseudo-link" aria-hidden="true" role="presentation">
+                                        <b class="b-user">
+                                            {{user.username}}
+                                        </b>
+                                    </span>
+                                </a>
                             </li>
                         </ul>
                     </div>
+                    {%endif%}
                 </div><a href="{%url 'logout_personal'%}"
                     class="b-header__link b-header__link_exit">Выход</a><a href="https://mail.yandex.ru/lite/setup"
                     class="b-header__link b-header__link_setup">Настройка</a><a href="https://yandex.ru/support/mail/"

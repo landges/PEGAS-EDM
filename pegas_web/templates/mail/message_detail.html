@@ -1,0 +1,85 @@
+{%extends 'base.html'%}
+{%block title%}
+{%endblock%}
+{%block content%}
+        <div class="b-message" role="main" aria-label="Рабочая область">
+            <div class="b-message-head">
+                <div class="b-message-head__top">
+                    <div class="b-message-head__subject"><span class="b-message-head__subject-text">{{message.topic}}</span>
+                    </div><span class="b-message-head__field b-message-head__field_date"><em
+                            class="b-message-head__field-name">Когда:
+                        </em> <span class="b-message-head__date">{{message.date|date:"d b в H:i"}}</span></span>
+                </div>
+                <div class="b-message-head__field"><em class="b-message-head__field-name">Кому:
+                    </em> <span class="b-message-head__field-value"><span class="b-message-head__person">{{message.receiver.first_name}} {{message.receiver.last_name}} {{message.receiver.profile.patronomic}} </span><a href="https://mail.yandex.ru/lite/compose?to=ustin0we@yandex.ru"
+                            class="b-message-head__email">{{message.receiver.username}}</a></span></div>
+                <div class="b-message-head__field"><em class="b-message-head__field-name">От кого:
+                    </em> <span class="b-message-head__field-value"><span
+                            class="b-message-head__person">{{message.sender.first_name}} {{message.sender.last_name}} {{message.sender.profile.patronomic}} </span><a
+                            href="https://mail.yandex.ru/lite/compose?to=konaz@mail.ru"
+                            class="b-message-head__email">{{message.sender.username}}</a></span></div>
+            </div>
+            <div class="b-message-body">
+                <div class="b-message-body__content">
+                    <div class="b-message-attach js-attachments"></div>
+                    {{message.text_message|safe}}
+                    <div class="b-message-attach js-attachments">
+                        <div class="b-message-attach__i js-attachment"><span class="b-message-attach__info"><img
+                                    alt=""
+                                    src="./Входящие (нет новых писем) — Яндекс.Почта_files/b-mail-icon_file-general.gif"
+                                    class="b-message-attach__info-icon">AEZ_VG20_V2_20201127.kml <em
+                                    class="b-message-attach__width"></em></span><span
+                                class="b-message-attach__actions"><a
+                                    href="https://mail.yandex.ru/message_part/AEZ_VG20_V2_20201127.kml?hid=1.2&amp;ids=174795960537318000&amp;name=AEZ_VG20_V2_20201127.kml&amp;filetype="
+                                    class="b-message-attach__actions-link">Скачать</a></span><input name="parts"
+                                value="1.2" type="hidden"></div>
+                        <div class="b-message-attach__i js-attachment"><span class="b-message-attach__info"><img
+                                    alt=""
+                                    src="./Входящие (нет новых писем) — Яндекс.Почта_files/b-mail-icon_file-general.gif"
+                                    class="b-message-attach__info-icon">result.kml <em
+                                    class="b-message-attach__width"></em></span><span
+                                class="b-message-attach__actions"><a
+                                    href="https://mail.yandex.ru/message_part/result.kml?hid=1.3&amp;ids=174795960537318000&amp;name=result.kml&amp;filetype="
+                                    class="b-message-attach__actions-link">Скачать</a></span><input name="parts"
+                                value="1.3" type="hidden"></div>
+                    </div>
+                </div>
+                <form method="POST" class="b-form" action="https://mail.yandex.ru/lite/compose-action.xml"
+                    enctype="multipart/form-data"><input type="hidden" name="ttype" value="plain"><input
+                        type="hidden" name="oper" value="reply"><input type="hidden" name="mark_as"
+                        value="replied"><input type="hidden" name="mark_ids" value="174795960537318000"><input
+                        type="hidden" name="inreplyto" value="&lt;1069596447.20210117215035@mail.ru&gt;"><input
+                        type="hidden" name="references" value="&lt;1069596447.20210117215035@mail.ru&gt;"><input
+                        type="hidden" name="overwrite" value=""><input type="hidden" name="from_mailbox"
+                        value="ustin0we@yandex.ru"><input type="hidden" name="from_name"
+                        value="Егор Устинов"><input type="hidden" name="to"
+                        value="&quot;Задворьев Иван Сергеевич&quot; &lt;konaz@mail.ru&gt;, "><input
+                        type="hidden" name="cc" value=""><input type="hidden" name="subj" value="Re:KML"><input
+                        type="hidden" name="_handlers" value="do-send"><input type="hidden" name="compose_check"
+                        value="76faa104d1e87997c3b19b9b01189157"><input type="hidden" name="_ckey"
+                        value="g5ZEwLkrA0/unh4QB29j8vpdlvM=!ktdbva0v"><input type="hidden" name="style"
+                        value="lite"><input type="hidden" name="retpath" value="inbox">
+                    <div class="b-message-reply">
+                        <div class="b-message-reply__toolbar"><span
+                                class="b-message-reply__toolbar_txt">Ответить на письмо</span></div>
+                        <div class="b-message-reply__form"><textarea cols="30" rows="5" class="b-form-textarea"
+                                name="send" aria-label="Ответить на письмо"></textarea>
+                            <div class="b-message-reply__form-act"><input name="doit" value="Отправить"
+                                    class="b-form-button" type="submit"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="b-message-pager"><span class="b-message-pager__active b-message-pager__left"><a
+                        href="https://mail.yandex.ru/lite/message/174795960537318010/"
+                        class="b-message-pager__prev"><i class="b-message-pager__arr">←&nbsp;</i><span
+                            class="b-message-pager__prev_txt">предыдущее письмо</span></a></span><span
+                    class="b-message-pager__active"><a
+                        href="https://mail.yandex.ru/lite/message/174795960537317997/"
+                        class="b-message-pager__next"><span class="b-message-pager__next_txt">следующее
+                            письмо</span><i class="b-message-pager__arr">&nbsp;→</i></a></span></div>
+        </div>
+    </div>
+
+
+{%endblock%}
