@@ -5,3 +5,7 @@ from .models import *
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
     list_display = ('topic', 'sender','receiver')
+
+@admin.register(File)
+class FileAdmin(admin.ModelAdmin):
+    list_display = ('id',)

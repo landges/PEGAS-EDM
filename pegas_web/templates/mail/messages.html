@@ -15,7 +15,12 @@
                 <label class="b-messages__message__checkbox">
                     <input type="checkbox" name="ids" class="b-form-checkbox" value="176766285374292674" aria-label=" Получено {{message.date|date:'d m '}}">
                 </label>
-                <div class="b-messages__message__flag" aria-hidden="true"></div>
+                <div class="b-messages__message__flag" aria-hidden="true">
+                    {%if not message.read and type_m == 'inbox'%}
+                    <img class="b-mail-icon b-mail-icon_new" src="{%static 'img/b-messages__message_new.png'%}" alt="*" role="presentation">
+                    {%endif%}
+                </div>
+                <!-- <div class="b-messages__message__flag" aria-hidden="true"></div> -->
                 <span class="b-messages__date" role="presentation" aria-hidden="true" title="Получено {{message.date|date:'d m '}} в {{message.date|timesince}}">
                     <span>{{message.date|date:"d b"}}</span>
                 </span> 

@@ -120,7 +120,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-LOGIN_REDIRECT_URL = '/mail/'
+LOGIN_REDIRECT_URL = '/mail/messages/'
 ACCOUNT_USERNAME_MIN_LENGTH = 4
 ACCOUNT_USERNAME_MAX_LENGTH = 20
 # Static files (CSS, JavaScript, Images)

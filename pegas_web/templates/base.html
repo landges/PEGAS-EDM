@@ -6,8 +6,10 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Входящие (нет новых писем) — Яндекс.Почта</title>
+    <title>{%block title%}Входящие (нет новых писем) — Яндекс.Почта{%endblock%}</title>
     <!--[if gt IE 7]><!-->
+    {%block head%}
+    {%endblock%}
     <link xmlns:fn="http://www.w3.org/2005/02/xpath-functions" type="text/css" rel="stylesheet"
         href="{% static 'css/_messages_lite.css'%}">
     <link xmlns:fn="http://www.w3.org/2005/02/xpath-functions" type="text/css" rel="stylesheet"
@@ -104,28 +106,28 @@
                 <div class="b-folders">
                     <div role="navigation" aria-label="Папки"><span class="b-folders__folder b-folders__folder_current">
                             <span class="b-folders__folder__name"><a class="b-folders__folder__link"
-                                    href="https://mail.yandex.ru/lite/inbox"
+                                    href="{%url 'messages'%}?type=inbox"
                                     aria-label="Входящие, нет новых писем"><span aria-hidden="true"
                                         role="presentation">Входящие</span></a></span></span> <span
                             class="b-folders__folder"> <span class="b-folders__folder__name"><a
-                                    class="b-folders__folder__link" href="https://mail.yandex.ru/lite/sent"
+                                    class="b-folders__folder__link" href="{%url 'messages'%}?type=sent"
                                     aria-label="Отправленные, нет новых писем"><span aria-hidden="true"
                                         role="presentation">Отправленные</span></a></span></span> <span
                             class="b-folders__folder"> <span class="b-folders__folder__name"><a
-                                    class="b-folders__folder__link" href="https://mail.yandex.ru/lite/trash"
+                                    class="b-folders__folder__link" href="{%url 'messages'%}?type=trash"
                                     aria-label="Удалённые, нет новых писем"><span aria-hidden="true"
                                         role="presentation">Удалённые</span></a></span></span> <span
                             class="b-folders__folder"> <span class="b-folders__folder__name"><a
-                                    class="b-folders__folder__link" href="https://mail.yandex.ru/lite/spam"
+                                    class="b-folders__folder__link" href="{%url 'messages'%}?type=spam"
                                     aria-label="Спам, нет новых писем"><span aria-hidden="true"
                                         role="presentation">Спам</span></a></span></span> <span
                             class="b-folders__folder"> <span class="b-folders__folder__name"><a
-                                    class="b-folders__folder__link" href="https://mail.yandex.ru/lite/draft"
+                                    class="b-folders__folder__link" href="{%url 'messages'%}?type=draft"
                                     aria-label="Черновики, нет новых писем"><span aria-hidden="true"
                                         role="presentation">Черновики</span></a></span></span><span
                             class="b-folders__folder b-folders__folder_nesting1"> <span
                                 class="b-folders__folder__name"><a class="b-folders__folder__link"
-                                    href="https://mail.yandex.ru/lite/template"
+                                    href="{%url 'messages'%}?type=template"
                                     aria-label="Шаблоны, нет новых писем"><span aria-hidden="true"
                                         role="presentation">Шаблоны</span></a></span></span> </div>
                     <div role="navigation" aria-label="Метки"><span class="b-labels"><a
@@ -138,11 +140,11 @@
                 </div>
             </div>
             <div class="b-layout__right">
-                <form method="POST" class="b-form" action="https://mail.yandex.ru/lite/messages-action.xml">
+                <!-- <form method="POST" class="b-form" action="https://mail.yandex.ru/lite/messages-action.xml"> -->
                     <div class="b-toolbar b-toolbar_type_messages">
                         <div class="b-toolbar__i" role="navigation" aria-label="Действия с письмами"><span
                                 class="b-toolbar__col"><a class="b-toolbar__but"
-                                    href="https://mail.yandex.ru/lite/compose/retpath=%2F" name="" aria-label="Написать"
+                                    href="{%url 'compose'%}" name="" aria-label="Написать"
                                     role="button"><i class="b-toolbar__but__i">Написать</i></a></span><span
                                 class="b-toolbar__col"><a class="b-toolbar__but"
                                     href="https://mail.yandex.ru/lite/inbox" name="" aria-label="Проверить"
@@ -208,26 +210,18 @@
                     </script>
                     {%block content%}
                     {%endblock%}
-                </form>
+                <!-- </form> -->
             </div>
         </div>
     </div>
     <div class="b-footer" role="contentinfo" aria-label="Подвал">
-        <div class="b-footer__col b-footer__col_left"><a
-                href="https://clck.yandex.ru/redir/dtype=stred/pid=2/cid=71261/path=iphone/*https://mail.yandex.ru/lite/set-skin.xml?_skin=touch/iphone">iPhone</a>
-            | <a
-                href="https://clck.yandex.ru/redir/dtype=stred/pid=2/cid=71261/path=android/*https://mail.yandex.ru/lite/set-skin.xml?_skin=touch/android">Android</a>
-            | <a
-                href="https://clck.yandex.ru/redir/dtype=stred/pid=2/cid=71261/path=java/*https://mail.yandex.ru/lite/set-skin.xml?_skin=pda">Java</a>
-        </div>
+        
         <div class="b-footer__col b-footer__col_right">
-            <div class="b-footer__block b-footer__block_versions"><a class="b-footer__link b-footer__link_mobile"
-                    href="https://mobile.yandex.ru/mail">Яндекс.Почта для телефонов</a><br><a class="b-footer__link"
-                    href="https://clck.yandex.ru/redir/dtype=stred/pid=2/cid=71261/path=full/*https://mail.yandex.ru/u2709/?dpda=yes">Полная&nbsp;версия</a>
+            <div class="b-footer__block b-footer__block_versions">
             </div>
             <div class="b-footer__block b-footer__block_links"></div>
             <div class="b-footer__block b-footer__block_copyright"><span class="b-footer__copyright">©&nbsp;2001—2021
-                    «<a href="https://yandex.ru/" class="b-footer__link">Яндекс</a>»</span></div>
+                    «<a href="https://yandex.ru/" class="b-footer__link">PEGAS</a>»</span></div>
         </div>
     </div>
     <script xmlns:fn="http://www.w3.org/2005/02/xpath-functions"
@@ -236,11 +230,6 @@
         src="{% static 'scripts/_lite.js'%}"></script>
     <script xmlns:fn="http://www.w3.org/2005/02/xpath-functions"
         src="{% static 'scripts/_messages.js'%}"></script>
-    <script type="text/javascript"
-        nonce="">(function (d, w, c) { (w[c] = w[c] || []).push(function () { try { w.yaCounter16082914 = new Ya.Metrika({ 'id': 16082914, 'enableAll': true, 'sendTitle': false, 'params': { 'lang': 'ru', 'skin': 'lite' }, 'tns': { 'account': 'yandex_ru', 'tmsec': 'yandex_mail' } }); } catch (e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f); } else { f(); } })(document, window, "yandex_metrika_callbacks");</script>
-    <noscript>
-        <div><img src="//mc.yandex.ru/watch/16082914" style="position:absolute; left:-9999px;" alt=""></div>
-    </noscript>
-</body>
+    </body>
 
 </html>
