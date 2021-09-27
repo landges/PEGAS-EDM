@@ -51,6 +51,8 @@ class Compose(View):
             if fileform.is_valid():
                 for f in files:
                     file = File.objects.create(file=f)
+                    #File.file.url (get path)
+                    #code (path: media/encrypt_doc/fjisdjf.bin)
                     message.files.add(file)
                 message.save()
             return redirect("messages")

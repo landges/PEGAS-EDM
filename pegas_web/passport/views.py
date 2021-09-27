@@ -22,6 +22,7 @@ class Regestration(View):
             #newly added
             user.profile.phone = request.POST['phone']
             user.profile.patronomic = request.POST['patronomic']
+            #cod gen key (function)
  
             # load the profile instance created by the signal
             user.save()
