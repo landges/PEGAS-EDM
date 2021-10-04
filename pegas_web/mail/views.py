@@ -2,7 +2,12 @@ from django.shortcuts import redirect, render
 from django.views.generic.base import View
 from django.views.generic import ListView, DetailView
 from .models import *
+from passport.models import *
 from .forms import DocumentForm, FileForm
+import hashlib
+from Crypto.PublicKey import RSA
+from Crypto.Random import get_random_bytes
+from Crypto.Cipher import AES, PKCS1_OAEP
 
 # Create your views here.
 def main(request):
@@ -24,8 +29,14 @@ class Mail(View):
     def post(self,request):
         pass
 
-class MessageDetailView(DetailView):
-    model = Message
+class MessageDetailView(View):
+    def get(self,request,pk):
+        message=Message.objects.get(id=pk)
+        valid=False
+        return render(request,'mail/message_detail.html',context={'message':message,"valid":valid})
+
+    def post(self,request):
+        pass
 
 
 class Compose(View):
@@ -50,9 +61,14 @@ class Compose(View):
             files = request.FILES.getlist('file')
             if fileform.is_valid():
                 for f in files:
-                    file = File.objects.create(file=f)
-                    #File.file.url (get path)
-                    #code (path: media/encrypt_doc/fjisdjf.bin)
+                    data = f.read()
+                    print(data)
+                    hash_file = hashlib.md5(b'data').hexdigest()
+                    private_key = sender.profile.private_key
+                    key = RSA.import_key(private_key)
+                    cipher_rsa = PKCS1_OAEP.new(key)
+                    ciphertext = cipher_rsa.encrypt(bytearray(hash_file, encoding='utf-8'))
+                    file = File.objects.create(file=f, encrypt_hash=ciphertext)
                     message.files.add(file)
                 message.save()
             return redirect("messages")

@@ -24,6 +24,9 @@
                 <div class="b-message-body__content">
                     <div class="b-message-attach js-attachments"></div>
                     {{message.text_message|safe}}
+                    {%if valid == False%}
+                    <p><span>Files were change without author!!! Please call nachalnik</span></p>
+                    {%endif%}
                     {%for file in message.files.all%}
                     <div class="b-message-attach js-attachments">
                         <div class="b-message-attach__i js-attachment">
