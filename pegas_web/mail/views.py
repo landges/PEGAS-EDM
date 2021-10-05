@@ -32,8 +32,23 @@ class Mail(View):
 class MessageDetailView(View):
     def get(self,request,pk):
         message=Message.objects.get(id=pk)
-        valid=False
-        return render(request,'mail/message_detail.html',context={'message':message,"valid":valid})
+        username = message.sender.username
+        files = message.files.all()
+        public_key = Center.objects.using('center').filter(user = username).first().public_key
+        valid = True
+        valid_dict = {}
+        for file in files:
+            content = file.file.read()
+            hash_doc = "b'"+hashlib.md5(bytes(content)).hexdigest()+"'"
+            key = RSA.import_key(public_key)
+            cipher_rsa = PKCS1_OAEP.new(key)
+            hash_check = cipher_rsa.decrypt(file.encrypt_hash)
+            if str(hash_check) != hash_doc: 
+                valid_dict[file]='False'
+            else:
+                valid_dict[file]='True'
+        print(valid_dict)     
+        return render(request,'mail/message_detail.html',context={'message':message,"valid_dict":valid_dict, 'valid': valid})
 
     def post(self,request):
         pass
@@ -62,8 +77,7 @@ class Compose(View):
             if fileform.is_valid():
                 for f in files:
                     data = f.read()
-                    print(data)
-                    hash_file = hashlib.md5(b'data').hexdigest()
+                    hash_file = hashlib.md5(bytes(data)).hexdigest()
                     private_key = sender.profile.private_key
                     key = RSA.import_key(private_key)
                     cipher_rsa = PKCS1_OAEP.new(key)

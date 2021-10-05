@@ -14,7 +14,7 @@ class Profile(models.Model):
 
 class Center(models.Model):
     DATABASES = 'center'
-    user = models.CharField(max_length=100, blank=True)
+    user = models.CharField(max_length=100, blank=True, unique=True)
     public_key = models.BinaryField(null=True)
 
 

@@ -18,22 +18,35 @@
                     </em> <span class="b-message-head__field-value"><span
                             class="b-message-head__person">{{message.sender.first_name}} {{message.sender.last_name}} {{message.sender.profile.patronomic}} </span><a
                             href="https://mail.yandex.ru/lite/compose?to=konaz@mail.ru"
-                            class="b-message-head__email">{{message.sender.username}}</a></span></div>
+                            class="b-message-head__email">{{message.sender.username}}</a></span>
+                        </div>
             </div>
+
             <div class="b-message-body">
                 <div class="b-message-body__content">
                     <div class="b-message-attach js-attachments"></div>
                     {{message.text_message|safe}}
+                    <div class="row" style="border-bottom: 1px solid #dddedd;padding: 5px;"></div>
                     {%if valid == False%}
                     <p><span>Files were change without author!!! Please call nachalnik</span></p>
+                    {%elif valid == True%}
+                    <p><span>Documents confirmed!</span></p>
                     {%endif%}
-                    {%for file in message.files.all%}
+                    {%for key, value in valid_dict.items%}
                     <div class="b-message-attach js-attachments">
                         <div class="b-message-attach__i js-attachment">
                             <span class="b-message-attach__info">
-                                <img alt="" src="{% static 'img/b-mail-icon_file-general.gif'%}" class="b-message-attach__info-icon">
-                                {{file.file.name}} 
-                                <em class="b-message-attach__width"></em>
+                                {%if value == 'True'%}
+                                    <img alt="" src="{% static 'img/galochka.png'%}" class="b-message-attach__info-icon" width="15" height="15">
+                                    <img alt="" src="{% static 'img/b-mail-icon_file-general.gif'%}" class="b-message-attach__info-icon">
+                                    {{key.file.name}} 
+                                    <em class="b-message-attach__width"></em>
+                                    {%else%}
+                                    <img alt="" src="{% static 'img/kore.jpg'%}" class="b-message-attach__info-icon" width="15" height="15">
+                                    <img alt="" src="{% static 'img/b-mail-icon_file-general.gif'%}" class="b-message-attach__info-icon">
+                                    {{key.file.name}} 
+                                    <em class="b-message-attach__width"></em>
+                                {%endif%}
                             </span>
                             <span class="b-message-attach__actions">
                                 <a href="{{file.file.url}}" class="b-message-attach__actions-link" download>Скачать
