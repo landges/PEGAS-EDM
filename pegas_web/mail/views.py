@@ -36,6 +36,7 @@ class Compose(View):
 
     def post(self, request):
         data = request.POST.copy()
+        print(data)
         fileform = FileForm(request.POST, request.FILES)
         receiver = User.objects.filter(username = request.POST['receiver']).first()
         if receiver:
@@ -56,3 +57,33 @@ class Compose(View):
             return redirect("messages")
         else:
             return render(request,'mail/compose.html',context={"fileform":fileform,"mform":form})
+
+class Create_Route(View):
+    def get(self, request):
+        fileform = FileForm()
+        mform = DocumentForm()
+        return render(request,'mail/create_route.html',context={"fileform":fileform,"mform":mform})
+
+    def post(self, request):
+        data = request.POST.copy()
+        print(data)
+        # fileform = FileForm(request.POST, request.FILES)
+        # receiver = User.objects.filter(username = request.POST['receiver']).first()
+        # if receiver:
+        #     data.update({"receiver":receiver.id})
+        # else:
+        #     data.update({"draft":True})
+        # form = DocumentForm(data, request.FILES)
+        # sender = User.objects.filter(username=request.user).first()
+        # form.instance.sender = sender
+        # if form.is_valid():
+        #     message = form.save()
+        #     files = request.FILES.getlist('file')
+        #     if fileform.is_valid():
+        #         for f in files:
+        #             file = File.objects.create(file=f)
+        #             message.files.add(file)
+        #         message.save()
+        #     return redirect("messages")
+        # else:
+        #     return render(request,'mail/create_route.html',context={"fileform":fileform,"mform":form})

@@ -1,7 +1,7 @@
 {%extends 'base.html'%}
 {%load static%}
 {%block title%}
-Новое письмо — Яндекс.Почта
+Создание нового маршрута
 {%endblock%}
     <!--[if gt IE 7]><!-->
 {%block head%}
@@ -11,22 +11,29 @@
 {%block content%}
     <div id="main" role="main" aria-label="Рабочая область">
         <div class="b-compose">
-            <form method="post" action="{%url 'compose'%}" enctype="multipart/form-data">
+            <form method="post" action="{%url 'create_route'%}" enctype="multipart/form-data">
                 {%csrf_token%}
             <table class="b-compose-head">
                 <tbody>
-                    <tr class="b-compose-head__field ">
+                    <div class="form_for_route" >
+                        <input type="text" placeholder="Узел*">
+                        <div class="add_user">Добавить</div>
+                        <script charset="utf-8" src="{% static 'scripts/add_user_in_route.js'%}"></script>
+                    </div>
+<!--                     <tr class="b-compose-head__field ">
                         <td class="b-compose-head__field__name">
                             <label class="b-form-label" for="id1166037212615">Кому</label></td>
                         <td class="b-compose-head__field__value">
                             <div class="b-form-input">
-                                <div class="b-form-input__box">
-                                    <!-- <input id="id1166037212615" class="b-form-input__input" name="to" autocorrect="off" autocomplete="off" value=""> -->
-                                    {{mform.receiver}}
+                            <div class="usr_rt">
+                                <div class="b-form-input__box">                                   <input id="id1166037212615" class="b-form-input__input" name="to" autocorrect="off" autocomplete="off" value=""> -->
+<!--                                     {{mform.receiver}}
                                 </div>
-                            </div>
+                            </div> -->
+
+<!--                             </div>
                         </td>
-                    </tr>
+                    </tr> -->
                     <tr class="b-compose-head__field js-enabled ">
                         <td class="b-compose-head__field__name"><label class="b-form-label"
                                 for="id1166037212610">Копия</label></td>
@@ -73,12 +80,9 @@
             <!-- <textarea class="b-form-textarea" name="send" id="compose-send" cols="30" rows="10" aria-label="Тело письма"></textarea> -->
             <div class="b-buttons">
                 {{fileform.file}}
-                <input class="b-form-button b-compose__send" type="submit" name="doit" value="Отправить">
+                <input class="b-form-button b-compose__send" type="submit" name="doit2" value="Отправить по маршруту">
                 <input class="b-form-button b-compose__draft" type="submit" name="nosend" value="Сохранить">
                 <input class="b-form-button b-compose__cancel" type="submit" name="cancel" value="Отмена">
- <!--                { if user.is_chief } -->
-<!--                     <input class="b-form-button b-compose__tr" type="submit" name="tr" value="Создать маршрут"> -->
-<!--                 { endif } -->
             </div>
         </div>
         </form>

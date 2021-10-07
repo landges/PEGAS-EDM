@@ -21,3 +21,9 @@ class FileForm(forms.ModelForm):
         widgets = {
             "file":forms.ClearableFileInput(attrs={'multiple': True,"class":"b-compose__file"})
         }
+
+# class RouteForm(forms.ModelForm):
+#     class Meta:
+#         model = Route
+#         fields = ('sender', 'receiver')
+        

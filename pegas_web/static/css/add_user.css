@@ -1,0 +1,10 @@
+.add_user {
+	cursor: pointer;
+}
+.usr_rt input {
+	display: block
+	padding:10px;
+}
+.padding10px{
+	padding-right: 10px;
+}

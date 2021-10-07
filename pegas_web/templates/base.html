@@ -14,6 +14,7 @@
         href="{% static 'css/_messages_lite.css'%}">
     <link xmlns:fn="http://www.w3.org/2005/02/xpath-functions" type="text/css" rel="stylesheet"
         href="{% static 'css/_message_lite.css'%}">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/add_user.css'%}">
     <!--<![endif]-->
     <!--[if lt IE 8]><link xmlns:fn="http://www.w3.org/2005/02/xpath-functions" type="text/css" rel="stylesheet" href="https://yastatic.net/s3/mail/lite/3.3.1/pages/messages/_messages_lite.ie.css"><![endif]-->
     <script type="text/javascript" async="" src="{% static 'scripts/watch.js'%}"></script>
@@ -156,7 +157,13 @@
                                 class="b-toolbar__col"><input name="tospam" type="submit" value="Это спам"
                                     class="b-toolbar__but b-toolbar__but__i" aria-label="Это спам"></span><span
                                 class="b-toolbar__col"><input name="mark" type="submit" value="Прочитано"
-                                    class="b-toolbar__but b-toolbar__but__i" aria-label="Прочитано"></span><span
+                                    class="b-toolbar__but b-toolbar__but__i" aria-label="Прочитано"></span>
+                                {% if user.is_superuser %}
+                                <span class="b-toolbar__col"><a class="b-toolbar__but"
+                                    href="{%url 'create_route'%}" name="" aria-label="Создать маршрут"
+                                    role="button"><i class="b-toolbar__but__i">Создать маршрут</i></a></span>
+                                {% endif %}
+                                <span
                                 class="b-toolbar__col js-dropdown b-toolbar__col_type_last"
                                 data-params="dir=sinked&amp;width=70%"><input name="more" type="submit" value="Ещё…"
                                     class="b-toolbar__but b-toolbar__but__i" aria-label="Ещё…">
