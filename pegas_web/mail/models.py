@@ -5,6 +5,7 @@ from django.shortcuts import reverse
 
 class File(models.Model):
     file=models.FileField(upload_to="files/", default=None, blank=True, null=True)
+    encrypt_hash = models.BinaryField(null=True)
     # def get_absolute_url(self):
     #     return reverse('mail:document-detail', kwargs={'pk': self.pk})
 

@@ -10,7 +10,14 @@ class Profile(models.Model):
     patronomic = models.CharField(max_length=100, blank=True,null=True,default=None)
     phone = models.CharField(max_length=30, blank=True)
     subscribe_news = models.BooleanField(default=None, blank=True, null=True)
-    private_key=models.FileField(upload_to="keys/", default=None, blank=True, null=True)
+    private_key=models.BinaryField(null=True)
+
+class Center(models.Model):
+    DATABASES = 'center'
+    user = models.CharField(max_length=100, blank=True, unique=True)
+    public_key = models.BinaryField(null=True)
+
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
