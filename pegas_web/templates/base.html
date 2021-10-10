@@ -17,12 +17,13 @@
     <!--<![endif]-->
     <!--[if lt IE 8]><link xmlns:fn="http://www.w3.org/2005/02/xpath-functions" type="text/css" rel="stylesheet" href="https://yastatic.net/s3/mail/lite/3.3.1/pages/messages/_messages_lite.ie.css"><![endif]-->
     <script type="text/javascript" async="" src="{% static 'scripts/watch.js'%}"></script>
-    <script type="text/javascript" src="{% static 'scripts/context.js'%}" async=""></script>
+    <script type="text/javascript" async="" src="{% static 'scripts/jquery-3.5.0.min.js'%}"></script>
+    <script type="text/javascript" language="JavaScript" src="{% static 'scripts/context.js'%}" async=""></script>
 
     <script charset="utf-8" src="{% static 'scripts/7327631eb8edafd80c8b.js'%}"
         crossorigin="anonymous" importance="high"></script>
     <script async="" crossorigin="anonymous" src="{% static 'scripts/host.js'%}"></script>
-    <meta id="https://yastatic.net/partner-code-bundles/43320/context_static.js'%}">
+    <meta id="{% static 'scripts/context_static.js'%}">
     <link rel="preconnect" href="https://ads.adfox.ru/">
     <script charset="utf-8" src="{% static 'scripts/ff61137c5804d26e4aa0.js'%}"
         crossorigin="anonymous" importance="high"></script>
@@ -32,47 +33,24 @@
         crossorigin="anonymous" importance="high"></script>
     <script charset="utf-8" src="{% static 'scripts/020aba68b484882db588.js'%}"
         crossorigin="anonymous" importance="high"></script>
+    {% block links %}
+    {% endblock %}
 </head>
 
 <body>
     <span style="position: absolute; left: -1000px;" role="status"></span>
     <div class="b-page">
         <div class="b-header">
-            <div class="b-head-logo b-head-logo_lang_ru"><a class="b-head-logo__logo" href="https://yandex.ru/">
+            <div class="b-head-logo b-head-logo_lang_ru"><a class="b-head-logo__logo">
                 <img alt="Яндекс" class="b-head-logo__image"
-                        src="{% static 'img/La6qi18Z8LwgnZdsAr1qy1GwCwo.gif'%}"></a><strong
+                        src="{% static 'img/pegas.png'%}"></a><strong
                     class="b-head-name b-head-name_logo"><a action="mailbox.check"
-                        href="https://mail.yandex.ru/lite/inbox"
                         class="b-head-name__link daria-action">почта</a></strong></div>
-            <div class="b-header__middle">
-                <table class="b-head-tabs" role="navigation" aria-label="Сервисы" aria-flowto="main">
-                    <tbody>
-                        <tr>
-                            <td class="b-head-tabs__item b-head-tabs__tab"><a href="https://mail.yandex.ru/"
-                                    class="b-head-tabs__link"><strong>Почта</strong></a></td>
-                            <td class="b-head-tabs__item b-head-tabs__tab"><a href="https://disk.yandex.ru/"
-                                    class="b-head-tabs__link">Диск</a></td>
-                            <td class="b-head-tabs__item b-head-tabs__tab"><a href="https://money.yandex.ru/"
-                                    class="b-head-tabs__link">Деньги</a></td>
-                            <td class="b-head-tabs__item b-head-tabs__tab"><a href="https://yandex.ru/"
-                                    class="b-head-tabs__link">Поиск</a></td>
-                            <td class="b-head-tabs__item b-head-tabs__tab"><a href="https://yandex.ru/images/"
-                                    class="b-head-tabs__link">Картинки</a></td>
-                            <td class="b-head-tabs__item b-head-tabs__tab"><a href="https://yandex.ru/maps"
-                                    class="b-head-tabs__link">Карты</a></td>
-                            <td class="b-head-tabs__item b-head-tabs__tab"><a href="https://translate.yandex.ru/"
-                                    class="b-head-tabs__link">Перевод</a></td>
-                            <td class="b-head-tabs__tab b-head-tabs__more"><a href="https://yandex.ru/all"
-                                    class="b-head-tabs__link">ещё</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
             <div class="b-header__right" role="navigation" aria-label="Настройки"><a class="b-userpic b-userpic_small"
                     aria-hidden="true" role="presentation" tabindex="-1"
-                    href="https://passport.yandex.ru/profile/avatars/"><img id="b-userpic__img"
-                        src="{% static 'img/small'%}" alt="" class="b-userpic__img"
-                        aria-hidden="true" role="presentation" tabindex="-1" style="display: none;">
+                    href="https://passport.yandex.ru/profile/avatars/">
+                    <!--<img id="b-userpic__img" src="{% static 'img/small'%}" alt="" class="b-userpic__img"
+                        aria-hidden="true" role="presentation" tabindex="-1" style="display: none;">-->
                     <script type="text/javascript" nonce="">
                         document.getElementById('b-userpic__img').onerror = function () {
                             this.style.display = 'none';
@@ -176,12 +154,16 @@
                             <div class="b-search" role="search" aria-label="Поиск">
                                 <table>
                                     <tbody>
-                                        <tr>
-                                            <td class="l"><input name="request" value="" type="search"
-                                                    placeholder="Поиск писем"></td>
-                                            <td class="r"><input type="submit" name="search" value="Найти" tabindex="0">
-                                            </td>
-                                        </tr>
+                                        <form class="form-inline search-form" action = "{% url 'messages' %}">
+                                            <tr>
+                                                <td class="l">
+                                                    <input name="request" value="" type="search" placeholder="Поиск писем">
+                                                </td>
+                                                <td class="r">
+                                                    <input type="submit" name="search" value="Найти" tabindex="0">
+                                                </td>
+                                            </tr>
+                                        </form>
                                     </tbody>
                                 </table>
                             </div>
@@ -221,7 +203,7 @@
             </div>
             <div class="b-footer__block b-footer__block_links"></div>
             <div class="b-footer__block b-footer__block_copyright"><span class="b-footer__copyright">©&nbsp;2001—2021
-                    «<a href="https://yandex.ru/" class="b-footer__link">PEGAS</a>»</span></div>
+                    «<a href="{% url 'welcome' %}" class="b-footer__link">PEGAS</a>»</span></div>
         </div>
     </div>
     <script xmlns:fn="http://www.w3.org/2005/02/xpath-functions"

@@ -6,32 +6,42 @@ from .models import *
 
 
 class SignUpForm(UserCreationForm):
-
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'password1', 'password2')
         widgets = {
-            "username": forms.TextInput(attrs={"class":"Textinput-Control","id":"login","name":"login","placeholder":"Придумайте логин"}),
-            "first_name": forms.TextInput(attrs={"class":"Textinput-Control","id":"firstname","name":"firstname","placeholder":"Имя"}),
-            "last_name": forms.TextInput(attrs={"class":"Textinput-Control","id":"secondname","name":"secondname","placeholder":"Фамилия"}),
-            "password1": forms.TextInput(attrs={"class":"Textinput-Control","id":"password","name":"password1","placeholder":"Придумайте пароль"}),
-            "password2": forms.PasswordInput(attrs={"class":"Textinput-Control","id":"password","name":"password2","placeholder":"Повторите пароль"}),
+            "username": forms.TextInput(attrs={"class": "Textinput-Control", "id": "login", "name": "login",
+                                               "placeholder": "Придумайте логин"}),
+            "first_name": forms.TextInput(
+                attrs={"class": "Textinput-Control", "id": "firstname", "name": "firstname", "placeholder": "Имя"}),
+            "last_name": forms.TextInput(attrs={"class": "Textinput-Control", "id": "secondname", "name": "secondname",
+                                                "placeholder": "Фамилия"}),
+            "password1": forms.TextInput(attrs={"class": "Textinput-Control", "id": "password", "name": "password1",
+                                                "placeholder": "Придумайте пароль"}),
+            "password2": forms.PasswordInput(attrs={"class": "Textinput-Control", "id": "password", "name": "password2",
+                                                    "placeholder": "Повторите пароль"}),
         }
+
     def __init__(self, *args, **kwargs):
         super(SignUpForm, self).__init__(*args, **kwargs)
 
-        self.fields['password1'].widget.attrs = {"class":"Textinput-Control","id":"password","name":"password1","placeholder":"Придумайте пароль"}
-        self.fields['password2'].widget.attrs = {"class":"Textinput-Control","id":"password","name":"password1","placeholder":"Придумайте пароль"}
-            
+        self.fields['password1'].widget.attrs = {"class": "Textinput-Control", "id": "password", "name": "password1",
+                                                 "placeholder": "Придумайте пароль"}
+        self.fields['password2'].widget.attrs = {"class": "Textinput-Control", "id": "password", "name": "password1",
+                                                 "placeholder": "Повторите пароль"}
+
 
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('patronomic','phone','user')
+        fields = ('patronomic', 'phone', 'user')
         widgets = {
-            "patronomic": forms.TextInput(attrs={"class":"Textinput-Control","id":"patronomic","name":"patronomic","placeholder":"Отчество"}),
-            "phone": forms.TextInput(attrs={"class":"Textinput-Control","type":"tel","id":"phone","name":"phone","placeholder":"Номер мобильного телефона"}),            
+            "patronomic": forms.TextInput(attrs={"class": "Textinput-Control", "id": "patronomic", "name": "patronomic",
+                                                 "placeholder": "Отчество"}),
+            "phone": forms.TextInput(attrs={"class": "Textinput-Control", "type": "tel", "id": "phone", "name": "phone",
+                                            "placeholder": "Номер мобильного телефона"}),
         }
+
 
 class UserLoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
@@ -39,17 +49,18 @@ class UserLoginForm(AuthenticationForm):
 
     username = UsernameField(widget=forms.TextInput(
         attrs={
-            
+
             'class': 'Textinput-Control',
-            'placeholder': 'Имя пользователя', 
+            'placeholder': 'Имя пользователя',
             'id': 'passp-field-login',
-            'name':'login'}))
+            'name': 'login'}))
     password = forms.CharField(widget=forms.PasswordInput(
         attrs={
             'class': 'Textinput-Control',
             'placeholder': '',
             'id': 'passp-field-passwd',
-            'name':'passwd',
-            'placeholder':'* * * * * * * *'
+            'name': 'passwd',
+            'placeholder': '* * * * * * * *'
         }
-))
+    ))
+

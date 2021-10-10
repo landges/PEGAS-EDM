@@ -1,5 +1,5 @@
 django==3.2.7
-psycopg2
+psycopg2-binary
 pillow
 flask
 django-ckeditor

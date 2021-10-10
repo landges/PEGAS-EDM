@@ -3,6 +3,9 @@
 {%block title%}
 Входящие
 {%endblock%}
+{% block links %}
+<script type="text/javascript" src="{% static 'scripts/select_msg.js'%}" async=""></script>
+{% endblock %}
 {%block content%}
     <div id="main" role="main" aria-label="Рабочая область">
         <input type="hidden" name="_ckey" value="Y9MpI8J3LItmQPK9pcEB8p2GB2Y=!ktbuv2q1">
@@ -103,9 +106,12 @@
                             тоже можно использовать при разработке.</span>&nbsp;</span></a></span>
         </div> -->
         
-        <div class="b-messages__check-all"><input id="check-all" class="b-form-checkbox pda-action"
-                type="checkbox" data-action="check-all"><label for="check-all"
-                class="b-form-label">выбрать все</label></div>
+        <div class="b-messages__check-all">
+            <input id="check-all" class="b-form-checkbox pda-action"
+                type="checkbox" data-action="check-all">
+            <label for="check-all"
+                class="b-form-label">выбрать все</label>
+        </div>
     </div>
     </div>
     <div class="b-pager">
