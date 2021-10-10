@@ -4,7 +4,6 @@
 Входящие
 {%endblock%}
 {% block links %}
-<script type="text/javascript" src="{% static 'scripts/select_msg.js'%}" async=""></script>
 {% endblock %}
 {%block content%}
     <div id="main" role="main" aria-label="Рабочая область">
@@ -15,6 +14,7 @@
     <div class="b-messages">
         {%for message in messages%}
             <div class="b-messages__message">
+                <input type="hidden" name="msg_id" value="{{message.id}}">
                 <label class="b-messages__message__checkbox">
                     <input type="checkbox" name="ids" class="b-form-checkbox" value="176766285374292674" aria-label=" Получено {{message.date|date:'d m '}}">
                 </label>

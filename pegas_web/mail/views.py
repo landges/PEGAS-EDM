@@ -4,6 +4,7 @@ from django.views.generic import ListView, DetailView
 from .models import *
 from .forms import DocumentForm, FileForm
 from django.db.models import Q
+from django.http import JsonResponse
 
 
 # Create your views here.
@@ -32,14 +33,24 @@ class Mail(View):
                 messages = Message.objects.filter(draft=True, spam=False, is_deleted=False)
             elif type_m == 'trash':
                 messages = Message.objects.filter((Q(receiver=user) | Q(sender=user)), is_deleted=True)
-            elif type_m == 'trash':
-                messages = Message.objects.filter((Q(receiver=user) | Q(sender=user)), spam=True)
+            elif type_m == 'favourite':
+                messages = Message.objects.filter((Q(receiver=user) | Q(sender=user)), favourite=True)
 
         return render(request, 'mail/messages.html', context={"messages": messages.order_by("-date"), "type_m": type_m})
 
     def post(self, request):
-        pass
-
+        msg_ids = request.POST['msgs']
+        if request.POST['type'] == 'delete':
+            for id in msg_ids:
+                msg = Message.objects.get(id=id)
+                if msg.is_deleted:
+                    pass
+                else:
+                    msg.is_deleted = True
+                    msg.save()
+            msgs = Message.objects.filter(is_deleted=False)
+            return JsonResponse({"complete": True,
+                                 "msgs": msgs}, status=200)
 
 class MessageDetailView(DetailView):
     model = Message
