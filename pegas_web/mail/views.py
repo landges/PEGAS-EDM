@@ -51,6 +51,9 @@ class Mail(View):
             msgs = Message.objects.filter(is_deleted=False)
             return JsonResponse({"complete": True,
                                  "msgs": msgs}, status=200)
+        else:
+            return JsonResponse({"complete": False,
+                                 "msgs": []}, status=200)
 
 class MessageDetailView(DetailView):
     model = Message
