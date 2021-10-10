@@ -10,6 +10,7 @@ $(document).ready(function () {
 	}
 	//when deleting messages or setting them to spam we call ajax function
 	delete_btn.onclick = function(event) {
+		sel_all_chbx.chacked = false;
 		var msgs_sel = [];
 		all_msgs = document.getElementsByClassName('b-messages__message');
 		for(var i=0, n=all_msgs.length;i<n;i++){
@@ -19,7 +20,7 @@ $(document).ready(function () {
 		}
 	 	$.ajax({
 	 		data:  {
-	          name:'test',
+	          type:'delete',
 	          msgs:'msgs_sel',
        		},
 	 		type: 'POST',
