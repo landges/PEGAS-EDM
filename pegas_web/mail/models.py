@@ -20,6 +20,7 @@ class Message(models.Model):
     files = models.ManyToManyField(File, related_name="files", default=None, blank=True)
     draft = models.BooleanField(default=False, blank=True, null=True)
     is_deleted = models.BooleanField(default=False, blank=True, null=True)
+    is_truly_deleted = models.BooleanField(default=False, blank=True, null=True)
     is_favourite = models.BooleanField(default=False, blank=True, null=True)
     def get_absolute_url(self):
         return reverse("message_detail", kwargs={"pk": self.id})

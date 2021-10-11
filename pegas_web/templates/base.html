@@ -83,28 +83,29 @@
         <div class="b-layout">
             <div class="b-layout__left">
                 <div class="b-folders">
-                    <div role="navigation" aria-label="Папки"><span class="b-folders__folder b-folders__folder_current">
+                    <div role="navigation" aria-label="Папки">
+                        <span class="b-folders__folder {%if type_m == 'inbox'%}b-folders__folder_current{% endif %}">
                             <span class="b-folders__folder__name"><a class="b-folders__folder__link"
                                     href="{%url 'messages'%}?type=inbox"
                                     aria-label="Входящие, нет новых писем"><span aria-hidden="true"
-                                        role="presentation">Входящие</span></a></span></span> <span
-                            class="b-folders__folder"> <span class="b-folders__folder__name"><a
-                                    class="b-folders__folder__link" href="{%url 'messages'%}?type=sent"
-                                    aria-label="Отправленные, нет новых писем"><span aria-hidden="true"
-                                        role="presentation">Отправленные</span></a></span></span> <span
-                            class="b-folders__folder"> <span class="b-folders__folder__name"><a
+                                        role="presentation">Входящие</span></a></span></span> 
+                        <span class="b-folders__folder {%if type_m == 'sent'%}b-folders__folder_current{% endif %}"> <span class="b-folders__folder__name"><a
+                                class="b-folders__folder__link" href="{%url 'messages'%}?type=sent"
+                                aria-label="Отправленные, нет новых писем"><span aria-hidden="true"
+                                    role="presentation">Отправленные</span></a></span></span> 
+                        <span class="b-folders__folder {%if type_m == 'trash'%}b-folders__folder_current{% endif %}"> <span class="b-folders__folder__name"><a
                                     class="b-folders__folder__link" href="{%url 'messages'%}?type=trash"
                                     aria-label="Удалённые, нет новых писем"><span aria-hidden="true"
                                         role="presentation">Удалённые</span></a></span></span> <span
-                            class="b-folders__folder"> <span class="b-folders__folder__name"><a
-                                    class="b-folders__folder__link" href="{%url 'messages'%}?type=spam"
-                                    aria-label="Спам, нет новых писем"><span aria-hidden="true"
-                                        role="presentation">Спам</span></a></span></span> <span
-                            class="b-folders__folder"> <span class="b-folders__folder__name"><a
+                            class="b-folders__folder {%if type_m == 'favourite'%}b-folders__folder_current{% endif %}"> <span class="b-folders__folder__name"><a
+                                    class="b-folders__folder__link" href="{%url 'messages'%}?type=favourite"
+                                    aria-label="Избранные, нет новых писем"><span aria-hidden="true"
+                                        role="presentation">Избранные</span></a></span></span> <span
+                            class="b-folders__folder {%if type_m == 'draft'%}b-folders__folder_current{% endif %}"> <span class="b-folders__folder__name"><a
                                     class="b-folders__folder__link" href="{%url 'messages'%}?type=draft"
                                     aria-label="Черновики, нет новых писем"><span aria-hidden="true"
                                         role="presentation">Черновики</span></a></span></span><span
-                            class="b-folders__folder b-folders__folder_nesting1"> <span
+                            class="b-folders__folder b-folders__folder_nesting1 {%if type_m == 'template'%}b-folders__folder_current{% endif %}"> <span
                                 class="b-folders__folder__name"><a class="b-folders__folder__link"
                                     href="{%url 'messages'%}?type=template"
                                     aria-label="Шаблоны, нет новых писем"><span aria-hidden="true"
@@ -132,8 +133,8 @@
                                     class="b-toolbar__but b-toolbar__but__i" aria-label="Переслать"></span><span
                                 class="b-toolbar__col"><input name="delete" type="submit" value="Удалить"
                                     class="b-toolbar__but b-toolbar__but__i" aria-label="Удалить"></span><span
-                                class="b-toolbar__col"><input name="tospam" type="submit" value="Это спам"
-                                    class="b-toolbar__but b-toolbar__but__i" aria-label="Это спам"></span><span
+                                class="b-toolbar__col"><input name="tofavourite" type="submit" value="В важные"
+                                    class="b-toolbar__but b-toolbar__but__i" aria-label="В избранные"></span><span
                                 class="b-toolbar__col"><input name="mark" type="submit" value="Прочитано"
                                     class="b-toolbar__but b-toolbar__but__i" aria-label="Прочитано"></span><span
                                 class="b-toolbar__col js-dropdown b-toolbar__col_type_last"
@@ -145,7 +146,7 @@
                                         class="b-folders__folder b-folders__folder_unread pda-action"
                                         data-action="messages-actions">Поставить метку</span><span
                                         class="b-folders__folder b-folders__folder_unread pda-action"
-                                        data-action="messages-tospam">Это спам</span><span
+                                        data-action="messages-tofavourite">В избранные</span><span
                                         class="b-folders__folder b-folders__folder_unread pda-action"
                                         data-action="messages-mark">Прочитано</span><span
                                         class="b-folders__folder b-folders__folder_unread pda-action"
@@ -156,6 +157,7 @@
                                 <table>
                                     <tbody>
                                         <form class="form-inline search-form" action = "{% url 'messages' %}">
+                                            {% csrf_token %}
                                             <tr>
                                                 <td class="l">
                                                     <input name="request" value="" type="search" placeholder="Поиск писем">

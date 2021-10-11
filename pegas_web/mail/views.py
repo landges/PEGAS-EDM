@@ -26,34 +26,43 @@ class Mail(View):
                 Q(text_message__icontains=search_query)).order_by('date')
         else:
             if type_m == 'inbox':
-                messages = Message.objects.filter(receiver=user, spam=False, is_deleted=False)
+                messages = Message.objects.filter(receiver=user, is_truly_deleted=False, is_deleted=False)
             elif type_m == 'sent':
-                messages = Message.objects.filter(sender=user, spam=False, is_deleted=False)
+                messages = Message.objects.filter(sender=user, is_truly_deleted=False, is_deleted=False)
             elif type_m == 'draft':
-                messages = Message.objects.filter(draft=True, spam=False, is_deleted=False)
+                messages = Message.objects.filter(draft=True, is_truly_deleted=False, is_deleted=False)
             elif type_m == 'trash':
-                messages = Message.objects.filter((Q(receiver=user) | Q(sender=user)), is_deleted=True)
+                messages = Message.objects.filter((Q(receiver=user) | Q(sender=user)), is_truly_deleted=False,
+                                                  is_deleted=True)
             elif type_m == 'favourite':
-                messages = Message.objects.filter((Q(receiver=user) | Q(sender=user)), favourite=True)
+                messages = Message.objects.filter((Q(receiver=user) | Q(sender=user)), favourite=True, is_deleted=False,
+                                                  is_truly_deleted=False)
 
         return render(request, 'mail/messages.html', context={"messages": messages.order_by("-date"), "type_m": type_m})
 
     def post(self, request):
-        msg_ids = request.POST['msgs']
-        if request.POST['type'] == 'delete':
+        msg_ids = request.POST.get('msgs[]', [])
+        if request.POST.get('type', None) == 'delete':
             for id in msg_ids:
                 msg = Message.objects.get(id=id)
                 if msg.is_deleted:
-                    pass
+                    msg.is_truly_deleted = True
                 else:
                     msg.is_deleted = True
-                    msg.save()
-            msgs = Message.objects.filter(is_deleted=False)
+                msg.save()
             return JsonResponse({"complete": True,
-                                 "msgs": msgs}, status=200)
+                                 }, status=200)
+        elif request.POST.get('type', None) == 'tofavourite':
+            for id in msg_ids:
+                msg = Message.objects.get(id=id)
+                msg.is_favourite = True
+                msg.save()
+            return JsonResponse({"complete": True,
+                                 }, status=200)
         else:
             return JsonResponse({"complete": False,
                                  "msgs": []}, status=200)
+
 
 class MessageDetailView(DetailView):
     model = Message
