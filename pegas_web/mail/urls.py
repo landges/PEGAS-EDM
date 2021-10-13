@@ -8,4 +8,5 @@ urlpatterns = [
     path("messages/", Mail.as_view(), name="messages"),
     path("compose/", Compose.as_view(),name="compose"),
     path("create_route/", Create_Route.as_view(),name="create_route"),
+    path("nextroad/", nextsteproad, name="nextroad")
 ]

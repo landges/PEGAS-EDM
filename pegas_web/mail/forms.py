@@ -1,5 +1,5 @@
 from django.forms import fields, widgets
-from .models import File, Message
+from .models import File, Message, Road
 from django import forms
 
 
@@ -7,7 +7,7 @@ class DocumentForm(forms.ModelForm):
     class Meta:
         model = Message
         # exclude=('sender',)
-        fields = ('receiver', 'topic', 'text_message','draft', 'files')
+        fields = ('receiver', 'topic', 'text_message', 'files', 'in_route')
         widgets = {
             "receiver": forms.TextInput(attrs={"name":"receiver","class":"b-form-input__input"}),
             "topic": forms.TextInput(attrs={"name":"subj","class":"b-form-input__input"}),
@@ -22,8 +22,10 @@ class FileForm(forms.ModelForm):
             "file":forms.ClearableFileInput(attrs={'multiple': True,"class":"b-compose__file"})
         }
 
-# class RouteForm(forms.ModelForm):
-#     class Meta:
-#         model = Route
-#         fields = ('sender', 'receiver')
-        
+class RoadForm(forms.ModelForm):
+    class Meta:
+        model = Road
+        fields = ('id',)
+        # widgets = {
+        #     "user_in_route": forms.TextInput(attrs={"class":"form_for_route"}) 
+        # }

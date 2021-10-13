@@ -158,7 +158,8 @@
                                     class="b-toolbar__but b-toolbar__but__i" aria-label="Это спам"></span><span
                                 class="b-toolbar__col"><input name="mark" type="submit" value="Прочитано"
                                     class="b-toolbar__but b-toolbar__but__i" aria-label="Прочитано"></span>
-                                {% if user.is_superuser %}
+                                <input type="hidden" name="userisboss" value={{userisboss}}>
+                                {% if userisboss == True %}
                                 <span class="b-toolbar__col"><a class="b-toolbar__but"
                                     href="{%url 'create_route'%}" name="" aria-label="Создать маршрут"
                                     role="button"><i class="b-toolbar__but__i">Создать маршрут</i></a></span>

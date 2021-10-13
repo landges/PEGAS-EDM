@@ -4,3 +4,4 @@ pillow
 flask
 django-ckeditor
 pandas
+pycryptodome

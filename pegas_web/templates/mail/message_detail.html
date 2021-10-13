@@ -25,7 +25,11 @@
             <div class="b-message-body">
                 <div class="b-message-body__content">
                     <div class="b-message-attach js-attachments"></div>
-                    {{message.text_message|safe}}
+                    {% if message.in_route == True and last_user_in_route != None %}
+                        Документ находится в маршруте!  
+                    {% else %}
+                        {{message.text_message|safe}}
+                    {% endif %}
                     <div class="row" style="border-bottom: 1px solid #dddedd;padding: 5px;"></div>
                     {%if valid == False%}
                     <p><span>Files were change without author!!! Please call nachalnik</span></p>
@@ -61,8 +65,9 @@
                     {%endfor%}
                     </div>
                 </div>
-                <form method="POST" class="b-form" action="https://mail.yandex.ru/lite/compose-action.xml"
-                    enctype="multipart/form-data"><input type="hidden" name="ttype" value="plain"><input
+                <form method="post" action="{%url 'nextroad'%}"
+                    enctype="multipart/form-data">
+<!--                     <input type="hidden" name="ttype" value="plain"><input
                         type="hidden" name="oper" value="reply"><input type="hidden" name="mark_as"
                         value="replied"><input type="hidden" name="mark_ids" value="174795960537318000"><input
                         type="hidden" name="inreplyto" value="&lt;1069596447.20210117215035@mail.ru&gt;"><input
@@ -75,14 +80,22 @@
                         type="hidden" name="_handlers" value="do-send"><input type="hidden" name="compose_check"
                         value="76faa104d1e87997c3b19b9b01189157"><input type="hidden" name="_ckey"
                         value="g5ZEwLkrA0/unh4QB29j8vpdlvM=!ktdbva0v"><input type="hidden" name="style"
-                        value="lite"><input type="hidden" name="retpath" value="inbox">
+                        value="lite"><input type="hidden" name="retpath" value="inbox"> -->
+                    {%csrf_token%}
                     <div class="b-message-reply">
-                        <div class="b-message-reply__toolbar"><span
-                                class="b-message-reply__toolbar_txt">Ответить на письмо</span></div>
-                        <div class="b-message-reply__form"><textarea cols="30" rows="5" class="b-form-textarea"
-                                name="send" aria-label="Ответить на письмо"></textarea>
-                            <div class="b-message-reply__form-act"><input name="doit" value="Отправить"
-                                    class="b-form-button" type="submit"></div>
+                        <!-- <div class="b-message-reply__form"><textarea cols="30" rows="5" class="b-form-textarea"
+                                name="send" aria-label="Ответить на письмо"></textarea> -->
+                            {% if message.in_route == True and last_user_in_route != None %}
+                                <div class="b-message-reply__toolbar"><span
+                                    class="b-message-reply__toolbar_txt">Редактируйте документ</span></div>
+                                <input type="hidden" name="id_route" value={{id_route}}>
+                                <input type="hidden" name="topic" value={{message.topic}}>
+                                {{mform.text_message}}
+                                {{fileform.file}}
+                                <div class="b-message-reply__form-act_true"><input name="doit1" value="Отправить далее по маршруту"
+                                        class="b-form-button" type="submit"></div> 
+                            {% endif %}
+                    
                         </div>
                     </div>
                 </form>
@@ -100,3 +113,14 @@
 
 
 {%endblock%}
+<!--                             {% if message.in_route == True %}
+                                <div class="b-message-reply__form-act_true"><input name="doit1" value="Отправить далее по маршруту"
+                                        class="b-form-button" type="submit"></div> 
+                            {% else %}                           
+                                <div class="b-message-reply__form-act_false"><input name="doit2" value="Отправить"
+                                        class="b-form-button" type="submit"></div>
+                            {% endif %} -->
+<!-- 
+
+                                <div else class="b-message-reply__form-act_false"><input name="doit2" value="Отправить"
+                                        class="b-form-button" type="submit"></div> -->
