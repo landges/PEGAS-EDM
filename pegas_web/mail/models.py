@@ -27,6 +27,13 @@ class Message(models.Model):
     def get_absolute_url(self):
         return reverse("message_detail", kwargs={"pk": self.id})
     
+    def get_size_files(self):
+        files = self.files.all()
+        size = 0
+        for file in files:
+            size +=file.file.size
+        return size
+    
     class Meta:
         ordering = ['-date']
 

@@ -14,25 +14,8 @@
         href="{% static 'css/_messages_lite.css'%}">
     <link xmlns:fn="http://www.w3.org/2005/02/xpath-functions" type="text/css" rel="stylesheet"
         href="{% static 'css/_message_lite.css'%}">
-    <!--<![endif]-->
-    <!--[if lt IE 8]><link xmlns:fn="http://www.w3.org/2005/02/xpath-functions" type="text/css" rel="stylesheet" href="https://yastatic.net/s3/mail/lite/3.3.1/pages/messages/_messages_lite.ie.css"><![endif]-->
-    <script type="text/javascript" async="" src="{% static 'scripts/watch.js'%}"></script>
-    <script type="text/javascript" src="{% static 'scripts/context.js'%}" async=""></script>
-    <script type="text/javascript" src="{% static 'scripts/select_msg.js'%}" async=""></script>
-    <script type="text/javascript" src="{% static 'scripts/jquery-3.5.0.min.js'%}" async=""></script>
-    <script charset="utf-8" src="{% static 'scripts/7327631eb8edafd80c8b.js'%}"
-        crossorigin="anonymous" importance="high"></script>
-    <script async="" crossorigin="anonymous" src="{% static 'scripts/host.js'%}"></script>
-    <meta id="https://yastatic.net/partner-code-bundles/43320/context_static.js'%}">
-    <link rel="preconnect" href="https://ads.adfox.ru/">
-    <!--<script charset="utf-8" src="{% static 'scripts/ff61137c5804d26e4aa0.js'%}"-->
-        <!--crossorigin="anonymous" importance="high"></script>-->
-    <!--<script charset="utf-8" src="{% static 'scripts/17a8731b627159e45a0d.js'%}"-->
-        <!--crossorigin="anonymous" importance="high"></script>-->
-    <!--<script charset="utf-8" src="{% static 'scripts/d79aa44ef1a5ade8fdd7.js'%}"-->
-        <!--crossorigin="anonymous" importance="high"></script>-->
-    <!--<script charset="utf-8" src="{% static 'scripts/020aba68b484882db588.js'%}"-->
-        <!--crossorigin="anonymous" importance="high"></script>-->
+    <link type="text/css" rel="stylesheet" href="{%static 'css/add_user.css'%}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{%static 'img/pegas-icon.png'%}">
 </head>
 
 <body>
@@ -40,35 +23,11 @@
     <div class="b-page">
         <div class="b-header">
             <div class="b-head-logo b-head-logo_lang_ru"><a class="b-head-logo__logo" href="https://yandex.ru/">
-                <img alt="Яндекс" class="b-head-logo__image"
-                        src="{% static 'img/La6qi18Z8LwgnZdsAr1qy1GwCwo.gif'%}"></a><strong
+                <img alt="pegas" class="b-head-logo__image" src="{% static 'img/2.jpg'%}"></a><strong
                     class="b-head-name b-head-name_logo"><a action="mailbox.check"
                         href="https://mail.yandex.ru/lite/inbox"
                         class="b-head-name__link daria-action">почта</a></strong></div>
-            <div class="b-header__middle">
-                <table class="b-head-tabs" role="navigation" aria-label="Сервисы" aria-flowto="main">
-                    <tbody>
-                        <tr>
-                            <td class="b-head-tabs__item b-head-tabs__tab"><a href="https://mail.yandex.ru/"
-                                    class="b-head-tabs__link"><strong>Почта</strong></a></td>
-                            <td class="b-head-tabs__item b-head-tabs__tab"><a href="https://disk.yandex.ru/"
-                                    class="b-head-tabs__link">Диск</a></td>
-                            <td class="b-head-tabs__item b-head-tabs__tab"><a href="https://money.yandex.ru/"
-                                    class="b-head-tabs__link">Деньги</a></td>
-                            <td class="b-head-tabs__item b-head-tabs__tab"><a href="https://yandex.ru/"
-                                    class="b-head-tabs__link">Поиск</a></td>
-                            <td class="b-head-tabs__item b-head-tabs__tab"><a href="https://yandex.ru/images/"
-                                    class="b-head-tabs__link">Картинки</a></td>
-                            <td class="b-head-tabs__item b-head-tabs__tab"><a href="https://yandex.ru/maps"
-                                    class="b-head-tabs__link">Карты</a></td>
-                            <td class="b-head-tabs__item b-head-tabs__tab"><a href="https://translate.yandex.ru/"
-                                    class="b-head-tabs__link">Перевод</a></td>
-                            <td class="b-head-tabs__tab b-head-tabs__more"><a href="https://yandex.ru/all"
-                                    class="b-head-tabs__link">ещё</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            
             <div class="b-header__right" role="navigation" aria-label="Настройки"><a class="b-userpic b-userpic_small"
                     aria-hidden="true" role="presentation" tabindex="-1"
                     href="https://passport.yandex.ru/profile/avatars/"><img id="b-userpic__img"
@@ -85,10 +44,11 @@
                     <div class="b-dropdown">
                         <ul class="b-dropdown__list" role="presentation">
                             <li class="b-dropdown__item b-dropdown__visible">
-                                <a class="b-dropdown__or" aria-label="ustin0we" href="https://passport.yandex.ru/profile/avatars/">
+                                Логин:
+                                <a class="b-dropdown__or" aria-label="ustin0we" href="#">
                                     <span class="b-pseudo-link" aria-hidden="true" role="presentation">
                                         <b class="b-user">
-                                            {{user.username}}
+                                             {{user.username}}
                                         </b>
                                     </span>
                                 </a>
@@ -96,10 +56,9 @@
                         </ul>
                     </div>
                     {%endif%}
-                </div><a href="{%url 'logout_personal'%}"
-                    class="b-header__link b-header__link_exit">Выход</a><a href="https://mail.yandex.ru/lite/setup"
-                    class="b-header__link b-header__link_setup">Настройка</a><a href="https://yandex.ru/support/mail/"
-                    class="b-header__link b-header__link_help">Помощь</a>
+                </div>
+                <a href="{%url 'logout_personal'%}" class="b-header__link b-header__link_exit">Выход</a>
+                <a href="https://yandex.ru/support/mail/" class="b-header__link b-header__link_help">Помощь</a>
             </div>
         </div>
         <div class="b-layout">
@@ -132,56 +91,35 @@
                                     href="{%url 'messages'%}?type=template"
                                     aria-label="Шаблоны, нет новых писем"><span aria-hidden="true"
                                         role="presentation">Шаблоны</span></a></span></span> </div>
-                    <div role="navigation" aria-label="Метки"><span class="b-labels"><a
-                                class="b-label b-label_important" href="https://mail.yandex.ru/lite/label/7"><img
-                                    class="b-mail-icon_important" alt=""
-                                    src="{% static 'img/b-messages__message_important.gif'%}">
-                                <span class="b-label__content">Важные</span></a> <a class="b-label b-label_unread"
-                                href="https://mail.yandex.ru/lite/unread"><span
-                                    class="b-label__content">Непрочитанные</span></a></span></div>
+                    
                 </div>
             </div>
             <div class="b-layout__right">
                 <!-- <form method="POST" class="b-form" action="https://mail.yandex.ru/lite/messages-action.xml"> -->
                     <div class="b-toolbar b-toolbar_type_messages">
-                        <div class="b-toolbar__i" role="navigation" aria-label="Действия с письмами"><span
-                                class="b-toolbar__col"><a class="b-toolbar__but"
-                                    href="{%url 'compose'%}" name="" aria-label="Написать"
-                                    role="button"><i class="b-toolbar__but__i">Написать</i></a></span><span
-                                class="b-toolbar__col"><a class="b-toolbar__but"
-                                    href="https://mail.yandex.ru/lite/inbox" name="" aria-label="Проверить"
-                                    role="button"><i class="b-toolbar__but__i">Проверить</i></a></span><span
-                                class="b-toolbar__col"><input name="forward" type="submit" value="Переслать"
-                                    class="b-toolbar__but b-toolbar__but__i" aria-label="Переслать"></span>
+                        <div class="b-toolbar__i" role="navigation" aria-label="Действия с письмами">
+                            <span class="b-toolbar__col">
+                                <a class="b-toolbar__but" href="{%url 'compose'%}" name="" aria-label="Написать" role="button">
+                                    <i class="b-toolbar__but__i">Написать</i>
+                                </a>
+                            </span>
+                        
+                            
                             <span class="b-toolbar__col">
                                 <input name="delete" type="submit" value="Удалить" class="b-toolbar__but b-toolbar__but__i" aria-label="Удалить">
                             </span>
-                            <span
-                                class="b-toolbar__col"><input name="tospam" type="submit" value="Это спам"
-                                    class="b-toolbar__but b-toolbar__but__i" aria-label="Это спам"></span><span
-                                class="b-toolbar__col"><input name="mark" type="submit" value="Прочитано"
-                                    class="b-toolbar__but b-toolbar__but__i" aria-label="Прочитано"></span>
+                            <span class="b-toolbar__col">
+                                <input name="tofavourite" type="submit" value="В избранные  " class="b-toolbar__but b-toolbar__but__i" aria-label="В избранные">
+                            </span>
+                            <span class="b-toolbar__col">
+                                <input name="mark" type="submit" value="Прочитано" class="b-toolbar__but b-toolbar__but__i" aria-label="Прочитано">
+                            </span>
                                 {% if userisboss == True %}
                                     <span class="b-toolbar__col"><a class="b-toolbar__but"
                                         href="{%url 'create_route'%}" name="" aria-label="Создать маршрут"
                                         role="button"><i class="b-toolbar__but__i">Создать маршрут</i></a></span>
                                 {% endif %}
-                                    <span
-                                class="b-toolbar__col js-dropdown b-toolbar__col_type_last"
-                                data-params="dir=sinked&amp;width=70%"><input name="more" type="submit" value="Ещё…"
-                                    class="b-toolbar__but b-toolbar__but__i" aria-label="Ещё…">
-                                <div class="b-folders_type_popup js-popup" style="display:none;"><span
-                                        class="b-folders__folder b-folders__folder_unread pda-action"
-                                        data-action="messages-actions">Переместить в папку</span><span
-                                        class="b-folders__folder b-folders__folder_unread pda-action"
-                                        data-action="messages-actions">Поставить метку</span><span
-                                        class="b-folders__folder b-folders__folder_unread pda-action"
-                                        data-action="messages-tospam">Это спам</span><span
-                                        class="b-folders__folder b-folders__folder_unread pda-action"
-                                        data-action="messages-mark">Прочитано</span><span
-                                        class="b-folders__folder b-folders__folder_unread pda-action"
-                                        data-action="messages-unmark">Не прочитано</span></div>
-                            </span></div>
+                        </div>
                         <div class="b-toolbar__search">
                             <div class="b-search" role="search" aria-label="Поиск">
                                 <table>
@@ -223,10 +161,15 @@
     </div>
     <script xmlns:fn="http://www.w3.org/2005/02/xpath-functions"
         src="{% static 'scripts/jquery.min.js'%}"></script>
+    
+    <script type="text/javascript" src="{% static 'scripts/jquery-3.5.0.min.js'%}" async=""></script>
     <script xmlns:fn="http://www.w3.org/2005/02/xpath-functions"
         src="{% static 'scripts/_lite.js'%}"></script>
     <script xmlns:fn="http://www.w3.org/2005/02/xpath-functions"
         src="{% static 'scripts/_messages.js'%}"></script>
+    
+    <script type="text/javascript" src="{% static 'scripts/select_msg.js'%}"></script>
+    
     </body>
 
 </html>

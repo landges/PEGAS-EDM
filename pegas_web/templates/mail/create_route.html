@@ -15,9 +15,13 @@
                 {%csrf_token%}
             <table class="b-compose-head">
                 <tbody>
-                    <div class="form_for_route" >
-                        <input type="text" placeholder="Узел*" name="node[]">
-                        <div class="add_user">Добавить</div>
+                    <div class="form_for_route" id="bu">
+                        
+                        <div class="beforeinput" >
+                            <span class="add_user b-message-attach__actions-link">Добавить</span>
+                            <span class="del_user b-message-attach__actions-link">Удалить узел</span>
+                        </div>
+                        <input type="text" placeholder="Узел*" name="node[]" class="user_was_added_in_route padding10px">
                         <script charset="utf-8" src="{% static 'scripts/add_user_in_route.js'%}"></script>
                     </div>
 <!--                     <tr class="b-compose-head__field ">

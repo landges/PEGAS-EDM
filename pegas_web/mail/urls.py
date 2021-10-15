@@ -11,5 +11,6 @@ urlpatterns = [
     path("nextroad/", nextsteproad, name="nextroad"),
     path("createdoc/",CreateDocument.as_view(), name="doc"),
     path("templates/<int:pk>/", TemplateView.as_view(), name='template_detail'),
-    path("create_file/", create_file, name="create_file")
+    path("create_file/", create_file, name="create_file"),
+    path("msgstatus/",change_status, name="change_status")
 ]

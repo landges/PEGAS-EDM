@@ -1,7 +1,7 @@
 {%extends 'base.html'%}
 {%load static%}
 {%block title%}
-Входящие
+Шаблоны
 {%endblock%}
 {%block content%}
     <div id="main" role="main" aria-label="Рабочая область">
@@ -23,7 +23,7 @@
                 <span class="b-messages__message__left" href="{{template.get_absolute_url}}" >
                     <a class="b-messages__from" href="{{template.get_absolute_url}}" style="width:1500px" aria-label="название: {{template.title}}">
                         <span class="b-messages__from__text" aria-hidden="true" role="presentation">
-                            <span class="b-messages__from__text" style=" font-size: 1.5em;">{{template.title}}</span>
+                            <span class="b-messages__from__text" style=" font-size: 1em;">{{template.title}}</span>
                         </span>
                     </a> 
                     <!--<a href="{{message.get_absolute_url}}" class="b-messages__message__link" aria-label="{{message.topic}}">-->

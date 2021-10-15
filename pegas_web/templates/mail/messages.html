@@ -1,7 +1,17 @@
 {%extends 'base.html'%}
 {%load static%}
 {%block title%}
-Входящие
+    {%if type_m == 'inbox'%}
+        Входящие
+    {%elif type_m == 'sent'%}
+        Исходящие
+    {%elif type_m == 'trash'%}
+        Удаленные
+    {%elif type_m == 'favourite'%}
+        Избранные
+    {%elif type_m == 'draft'%}
+        Черновики
+    {%endif%}
 {%endblock%}
 {%block content%}
     <div id="main" role="main" aria-label="Рабочая область">
@@ -11,7 +21,8 @@
         
     <div class="b-messages">
         {%for message in messages%}
-            <div class="b-messages__message">
+            <div class="b-messages__message {%if message.in_route%}b-messages__message_thread{%endif%} {%if not message.read and type_m == 'inbox'%}b-messages__message_unread{%endif%}">
+                <input type="hidden" name="msg_id" value="{{message.id}}">
                 <label class="b-messages__message__checkbox">
                     <input type="checkbox" name="ids" class="b-form-checkbox" value="176766285374292674" aria-label=" Получено {{message.date|date:'d m '}}">
                 </label>
@@ -20,16 +31,30 @@
                     <img class="b-mail-icon b-mail-icon_new" src="{%static 'img/b-messages__message_new.png'%}" alt="*" role="presentation">
                     {%endif%}
                 </div>
+                {%if message.files.all%}
+                    <span class="b-messages__size" aria-hidden="true">
+                        <img class="b-mail-icon b-mail-icon_attach" alt="@" src="{% static 'img/b-messages__message_attach.gif'%}" role="presentation">
+                        <span class="b-messages__size__width">{{message.get_size_files|filesizeformat}}</span>
+                    </span>
+                {%endif%}
                 <!-- <div class="b-messages__message__flag" aria-hidden="true"></div> -->
                 <span class="b-messages__date" role="presentation" aria-hidden="true" title="Получено {{message.date|date:'d m '}} в {{message.date|timesince}}">
                     <span>{{message.date|date:"d b"}}</span>
                 </span> 
                 <span class="b-messages__message__left" href="{{message.get_absolute_url}}">
+                    {%if type_m == 'sent'%}
+                    <a class="b-messages__from" href="{{message.get_absolute_url}}" aria-label="Получатель: {{message.receiver.username}}">
+                        <span class="b-messages__from__text" aria-hidden="true" role="presentation">
+                            <span class="b-messages__from__text">{{message.receiver.username}}</span>
+                        </span>
+                    </a>
+                    {%else%}
                     <a class="b-messages__from" href="{{message.get_absolute_url}}" aria-label="Отправитель: {{message.sender.username}}">
                         <span class="b-messages__from__text" aria-hidden="true" role="presentation">
                             <span class="b-messages__from__text">{{message.sender.username}}</span>
                         </span>
-                    </a> 
+                    </a>
+                    {%endif%} 
                     <a href="{{message.get_absolute_url}}" class="b-messages__message__link" aria-label="{{message.topic}}">
                         <span aria-hidden="true" role="presentation">
                             <span class="b-messages__subject">
@@ -43,65 +68,6 @@
                 </span>
             </div>
         {%endfor%}
-        
-        
-        <!-- <div class="b-messages__message b-messages__message_thread"><label
-                class="b-messages__message__checkbox"><input type="checkbox" name="tids"
-                    class="b-form-checkbox" value="176203335420871343:2"
-                    aria-label=" Получено  4 авг"></label>
-            <div class="b-messages__message__flag" aria-hidden="true"></div><span
-                class="b-messages__date" role="presentation" aria-hidden="true"
-                title="Получено  4 августа в 17:24"><span> 4 авг</span></span> <span
-                class="b-messages__message__left" href="/lite/thread/176203335420871343"><a
-                    class="b-messages__from"
-                    href="https://mail.yandex.ru/lite/thread/176203335420871343"
-                    aria-label="Отправитель: Платформа ОФД"><span class="b-messages__from__text"
-                        aria-hidden="true" role="presentation"><span
-                            class="b-messages__from__text">Платформа ОФД</span></span></a> <a
-                    class="b-messages__thread-num"
-                    href="https://mail.yandex.ru/lite/thread/176203335420871343"
-                    aria-label="Писем в треде: 2"><span class="b-messagesthread-numval"
-                        aria-hidden="true" role="presentation"><span>2</span></span></a> <a
-                    href="https://mail.yandex.ru/lite/thread/176203335420871343"
-                    class="b-messages__message__link"
-                    aria-label="Электронный чек Платформа ОФД. Вам подарок! Уникальные предложения от наших друзей АО &quot;&quot;Ред Вингс&quot;&quot; 109316, Регион 77, Москва, Волгоградский проспект, дом 42, корпус 9 ИНН 7732107883 Место расчётов: https://flyredwings.com/ Кассовый чек №715 Приход 04.08.2021 17:23 Смена 118"><span
-                        aria-hidden="true" role="presentation"><span
-                            class="b-messages__subject"><span>Электронный чек Платформа
-                                ОФД</span></span> <span class="b-messages__firstline">Вам подарок!
-                            Уникальные предложения от наших друзей АО ""Ред Вингс"" 109316, Регион
-                            77, Москва, Волгоградский проспект, дом 42, корпус 9 ИНН 7732107883
-                            Место расчётов: https://flyredwings.com/ Кассовый чек №715 Приход
-                            04.08.2021 17:23 Смена 118</span>&nbsp;</span></a></span>
-        </div> -->
-        
-        <!-- <div class="b-messages__message b-messages__message_with-size"><label
-                class="b-messages__message__checkbox"><input type="checkbox" name="ids"
-                    class="b-form-checkbox" value="175921860444160677"
-                    aria-label=" Получено 25 май У этого письма есть вложение"></label>
-            <div class="b-messages__message__flag" aria-hidden="true"></div><span
-                class="b-messages__size" aria-hidden="true"><img
-                    class="b-mail-icon b-mail-icon_attach" alt="@"
-                    src="{% static 'img/b-messages__message_attach.gif'%}"
-                    role="presentation"><span class="b-messages__size__width">8 МБ</span></span>
-            <span class="b-messages__date" role="presentation" aria-hidden="true"
-                title="Получено 25 мая в 05:11"><span>25 май</span></span> <span
-                class="b-messages__message__left" href="/lite/message/175921860444160677"><a
-                    class="b-messages__from"
-                    href="https://mail.yandex.ru/lite/message/175921860444160677"
-                    aria-label="Отправитель: Задворьев Иван Сергеевич"><span
-                        class="b-messages__from__text" aria-hidden="true" role="presentation"><span
-                            class="b-messages__from__text">Задворьев Иван
-                            Сергеевич</span></span></a> <a
-                    href="https://mail.yandex.ru/lite/message/175921860444160677"
-                    class="b-messages__message__link"
-                    aria-label="пывапвы. В приложении к письму - еще одна база с координатами (в Красноярске). Взята вот тут - https://wk24.ru/services/detaliz_peredvizheniya/ Наряду с complex-базой тоже можно использовать при разработке."><span
-                        aria-hidden="true" role="presentation"><span
-                            class="b-messages__subject"><span>пывапвы</span></span> <span
-                            class="b-messages__firstline">В приложении к письму - еще одна база с
-                            координатами (в Красноярске). Взята вот тут -
-                            https://wk24.ru/services/detaliz_peredvizheniya/ Наряду с complex-базой
-                            тоже можно использовать при разработке.</span>&nbsp;</span></a></span>
-        </div> -->
         
         <div class="b-messages__check-all"><input id="check-all" class="b-form-checkbox pda-action"
                 type="checkbox" data-action="check-all"><label for="check-all"
@@ -134,7 +100,6 @@
         {% if next_url %}
         <span class="b-pager__active">
             <a class="b-pager__next"
-                href="https://mail.yandex.ru/lite/inbox/page_number=2"
                 href="?{{next_url}}"
                 aria-label="Следующая страница">
                 <span aria-hidden="true"

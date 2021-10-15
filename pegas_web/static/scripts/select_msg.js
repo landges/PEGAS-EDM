@@ -15,12 +15,19 @@ $(document).ready(function () {
 		var msgs_sel = [];
 		var msgs_2del = [];
 		all_msgs = document.getElementsByClassName('b-messages__message');
-		for(var i=0, n=all_msgs.length;i<n;i++){
-			if (all_msgs[i].getElementsByClassName('b-form-checkbox')[0].checked==true) {
-				msgs_sel.push(all_msgs[i].querySelector('[name="msg_id"]').value);
-				msgs_2del.push(all_msgs[i]);
+		if (all_msgs.length>0){
+			for(var i=0, n=all_msgs.length;i<n;i++){
+				if (all_msgs[i].getElementsByClassName('b-form-checkbox')[0].checked==true) {
+					msgs_sel.push(all_msgs[i].querySelector('[name="msg_id"]').value);
+					msgs_2del.push(all_msgs[i]);
+				}
 			}
 		}
+		else{
+			msgs_sel.push(document.querySelector('[name="msg_id"]').value);
+			// msgs_2del.push(all_msgs[i]);
+		}
+		
 		function csrfSafeMethod(method) {
 	        // these HTTP methods do not require CSRF protection
 	        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
@@ -38,7 +45,7 @@ $(document).ready(function () {
 	 	$.ajax({
 	 		type: 'POST',
 	 		csrftoken,
-	 		url: '',
+	 		url: '/mail/msgstatus/',
 	 		data:  {
 	          type:'delete',
 	          msgs: msgs_sel,
@@ -46,16 +53,23 @@ $(document).ready(function () {
 	 		
 	 		success: function (response) {
 	 			if (response.complete){
-	 				for(var i=0, n=msgs_2del.length;i<n;i++){
-	 					console.log(msgs_2del[i]);
-	 					$(msgs_2del[i]).remove();
-	 				}
-	 				
+					if (msgs_2del.length > 0)
+					{
+						for(var i=0, n=msgs_2del.length;i<n;i++){
+							console.log(msgs_2del[i]);
+							$(msgs_2del[i]).remove();
+						}
+					}
+					else{
+						// window.history.back();
+						document.location.href=document.referrer;
+					}	 				
 	 			}
+				
 	 		},
 	 		error: function (response) {
                 // sign about error
-                console.log(response.responseJSON.errors);
+                // console.log(response.responseJSON.errors);
 	        }
 	 	});
 	 	return false;
@@ -66,10 +80,15 @@ $(document).ready(function () {
 		var msgs_sel = [];
 		var msgs_2del = [];
 		all_msgs = document.getElementsByClassName('b-messages__message');
-		for(var i=0, n=all_msgs.length;i<n;i++){
-			if (all_msgs[i].getElementsByClassName('b-form-checkbox')[0].checked==true) {
-				msgs_sel.push(all_msgs[i].querySelector('[name="msg_id"]').value);
+		if (all_msgs.length>0){
+			for(var i=0, n=all_msgs.length;i<n;i++){
+				if (all_msgs[i].getElementsByClassName('b-form-checkbox')[0].checked==true) {
+					msgs_sel.push(all_msgs[i].querySelector('[name="msg_id"]').value);
+				}
 			}
+		}
+		else{
+			msgs_sel.push(document.querySelector('[name="msg_id"]').value);
 		}
 		function csrfSafeMethod(method) {
 	        // these HTTP methods do not require CSRF protection
@@ -88,7 +107,7 @@ $(document).ready(function () {
 	 	$.ajax({
 	 		type: 'POST',
 	 		csrftoken,
-	 		url: '',
+	 		url: '/mail/msgstatus/',
 	 		data:  {
 	          type:'tofavourite',
 	          msgs: msgs_sel,
@@ -104,7 +123,7 @@ $(document).ready(function () {
 	 		},
 	 		error: function (response) {
                 // sign about error
-                console.log(response.responseJSON.errors);
+                // console.log(response.responseJSON.errors);
 	        }
 	 	});
 	 	return false;

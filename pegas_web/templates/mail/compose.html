@@ -13,6 +13,7 @@
         <div class="b-compose">
             <form method="post" action="{%url 'compose'%}" enctype="multipart/form-data">
                 {%csrf_token%}
+                <input type="hidden" name="id_route" value="">
             <table class="b-compose-head">
                 <tbody>
                     <tr class="b-compose-head__field ">

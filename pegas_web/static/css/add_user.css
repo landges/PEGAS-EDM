@@ -1,0 +1,9 @@
+.add_user {
+	cursor: pointer;
+}
+.usr_rt input {
+	display: block;
+}
+.padding10px{
+	margin:5px;
+}

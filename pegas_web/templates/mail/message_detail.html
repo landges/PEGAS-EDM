@@ -4,6 +4,8 @@
 {%endblock%}
 {%block content%}
         <div class="b-message" role="main" aria-label="Рабочая область">
+            <input type="hidden" name="msg_id" value="{{message.id}}">
+            {%csrf_token%}
             <div class="b-message-head">
                 <div class="b-message-head__top">
                     <div class="b-message-head__subject"><span class="b-message-head__subject-text">{{message.topic}}</span>
@@ -62,40 +64,34 @@
                     {%endfor%}
                     </div>
                 </div>
-                <form method="POST" class="b-form" action="https://mail.yandex.ru/lite/compose-action.xml"
-                    enctype="multipart/form-data"><input type="hidden" name="ttype" value="plain"><input
-                        type="hidden" name="oper" value="reply"><input type="hidden" name="mark_as"
-                        value="replied"><input type="hidden" name="mark_ids" value="174795960537318000"><input
-                        type="hidden" name="inreplyto" value="&lt;1069596447.20210117215035@mail.ru&gt;"><input
-                        type="hidden" name="references" value="&lt;1069596447.20210117215035@mail.ru&gt;"><input
-                        type="hidden" name="overwrite" value=""><input type="hidden" name="from_mailbox"
-                        value="ustin0we@yandex.ru"><input type="hidden" name="from_name"
-                        value="Егор Устинов"><input type="hidden" name="to"
-                        value="&quot;Задворьев Иван Сергеевич&quot; &lt;konaz@mail.ru&gt;, "><input
-                        type="hidden" name="cc" value=""><input type="hidden" name="subj" value="Re:KML"><input
-                        type="hidden" name="_handlers" value="do-send"><input type="hidden" name="compose_check"
-                        value="76faa104d1e87997c3b19b9b01189157"><input type="hidden" name="_ckey"
-                        value="g5ZEwLkrA0/unh4QB29j8vpdlvM=!ktdbva0v"><input type="hidden" name="style"
-                        value="lite"><input type="hidden" name="retpath" value="inbox">
+                {%if message.sender.username != user.username%}
+                {%if read_in_route != True%}
+                <form method="post" action="{%url 'nextroad'%}"
+                    enctype="multipart/form-data">
+                    {%csrf_token%}
                     <div class="b-message-reply">
-                        <div class="b-message-reply__toolbar"><span
-                                class="b-message-reply__toolbar_txt">Ответить на письмо</span></div>
-                        <div class="b-message-reply__form"><textarea cols="30" rows="5" class="b-form-textarea"
-                                name="send" aria-label="Ответить на письмо"></textarea>
-                            <div class="b-message-reply__form-act"><input name="doit" value="Отправить"
-                                    class="b-form-button" type="submit"></div>
+                        <!-- <div class="b-message-reply__form"><textarea cols="30" rows="5" class="b-form-textarea"
+                                name="send" aria-label="Ответить на письмо"></textarea> -->
+                            {% if message.in_route == True and last_user_in_route != None %}
+                                <div class="b-message-reply__toolbar"><span
+                                    class="b-message-reply__toolbar_txt">Редактируйте документ</span></div>
+                                <input type="hidden" name="id_route" value={{id_route}}>
+                                <input type="hidden" name="topic" value={{message.topic}}>
+                                {{mform.text_message}}
+                                {{fileform.file}}
+                                <div class="b-message-reply__form-act_true"><input name="doit1" value="Отправить далее по маршруту"
+                                        class="b-form-button" type="submit"></div> 
+                            {% endif %}
+                    
                         </div>
                     </div>
                 </form>
+                {%endif%}
+                {%endif%}
             </div>
-            <div class="b-message-pager"><span class="b-message-pager__active b-message-pager__left"><a
-                        href="https://mail.yandex.ru/lite/message/174795960537318010/"
-                        class="b-message-pager__prev"><i class="b-message-pager__arr">←&nbsp;</i><span
-                            class="b-message-pager__prev_txt">предыдущее письмо</span></a></span><span
-                    class="b-message-pager__active"><a
-                        href="https://mail.yandex.ru/lite/message/174795960537317997/"
-                        class="b-message-pager__next"><span class="b-message-pager__next_txt">следующее
-                            письмо</span><i class="b-message-pager__arr">&nbsp;→</i></a></span></div>
+            <div class="b-messages__check-all" style="display:none;"><input id="check-all" class="b-form-checkbox pda-action"
+                type="checkbox" data-action="check-all"><label for="check-all"
+                class="b-form-label">выбрать все</label></div>
         </div>
     </div>
 

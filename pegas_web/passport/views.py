@@ -46,7 +46,7 @@ class Regestration(View):
             # login user after signing up
             user = authenticate(username=user.username, password=raw_password)
             login(request, user)
-            return redirect('/mail/messages/')
+            return redirect("messages")
         else:
             return redirect('/passport/welcome/')
 
