@@ -49,10 +49,10 @@ class Mail(View):
         search_query = request.GET.get('request', '')
         if search_query:
             messages = Message.objects.filter(
-                Q(sender__username__icontains=search_query) |
+                (Q(sender__username__icontains=search_query) |
                 Q(receiver__username__icontains=search_query) |
                 Q(topic__icontains=search_query) |
-                Q(text_message__icontains=search_query)).order_by('date')
+                Q(text_message__icontains=search_query))&(Q(sender=user) | Q(receiver=user))).order_by('date')
         else:
             if type_m == 'inbox':
                 messages = Message.objects.filter(receiver=user)
@@ -100,6 +100,8 @@ class MessageDetailView(View):
         message=Message.objects.filter(id=pk)
         mform = DocumentForm(message.values()[0])
         message = message.first()
+        message.read = True
+        message.save()
         username = message.sender.username
         files = message.files.all()
         public_key = Center.objects.using('center').filter(user = username).first().public_key

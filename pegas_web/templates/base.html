@@ -19,6 +19,7 @@
     <script type="text/javascript" async="" src="{% static 'scripts/watch.js'%}"></script>
     <script type="text/javascript" src="{% static 'scripts/context.js'%}" async=""></script>
     <script type="text/javascript" src="{% static 'scripts/select_msg.js'%}" async=""></script>
+    <script type="text/javascript" src="{% static 'scripts/jquery-3.5.0.min.js'%}" async=""></script>
     <script charset="utf-8" src="{% static 'scripts/7327631eb8edafd80c8b.js'%}"
         crossorigin="anonymous" importance="high"></script>
     <script async="" crossorigin="anonymous" src="{% static 'scripts/host.js'%}"></script>
@@ -104,7 +105,7 @@
         <div class="b-layout">
             <div class="b-layout__left">
                 <div class="b-folders">
-                    <div role="navigation" aria-label="Папки"><span class="b-folders__folder b-folders__folder_current">
+                    <div role="navigation" aria-label="Папки">
                         <span class="b-folders__folder {%if type_m == 'inbox'%}b-folders__folder_current{% endif %}">
                             <span class="b-folders__folder__name"><a class="b-folders__folder__link"
                                     href="{%url 'messages'%}?type=inbox"
@@ -151,9 +152,11 @@
                                     href="https://mail.yandex.ru/lite/inbox" name="" aria-label="Проверить"
                                     role="button"><i class="b-toolbar__but__i">Проверить</i></a></span><span
                                 class="b-toolbar__col"><input name="forward" type="submit" value="Переслать"
-                                    class="b-toolbar__but b-toolbar__but__i" aria-label="Переслать"></span><span
-                                class="b-toolbar__col"><input name="delete" type="submit" value="Удалить"
-                                    class="b-toolbar__but b-toolbar__but__i" aria-label="Удалить"></span><span
+                                    class="b-toolbar__but b-toolbar__but__i" aria-label="Переслать"></span>
+                            <span class="b-toolbar__col">
+                                <input name="delete" type="submit" value="Удалить" class="b-toolbar__but b-toolbar__but__i" aria-label="Удалить">
+                            </span>
+                            <span
                                 class="b-toolbar__col"><input name="tospam" type="submit" value="Это спам"
                                     class="b-toolbar__but b-toolbar__but__i" aria-label="Это спам"></span><span
                                 class="b-toolbar__col"><input name="mark" type="submit" value="Прочитано"
@@ -183,13 +186,16 @@
                             <div class="b-search" role="search" aria-label="Поиск">
                                 <table>
                                     <tbody>
-                                        <tr>
-                                            <td class="l">
-                                                <input name="request" value="{{search_query}}" type="search" placeholder="Поиск писем">
-                                            </td>
-                                            <td class="r"><input type="submit" name="search" value="Найти" tabindex="0">
-                                            </td>
-                                        </tr>
+                                        <form class="form-inline search-form" action = "{% url 'messages' %}">
+                                            {% csrf_token %}
+                                            <tr>
+                                                <td class="l">
+                                                    <input name="request" value="{{search_query}}" type="search" placeholder="Поиск писем">
+                                                </td>
+                                                <td class="r"><input type="submit" name="search" value="Найти" tabindex="0">
+                                                </td>
+                                            </tr>   
+                                        </form>
                                     </tbody>
                                 </table>
                             </div>
