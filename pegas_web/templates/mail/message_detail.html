@@ -33,11 +33,11 @@
                                 <em class="b-message-attach__width"></em>
                             </span>
                             <span class="b-message-attach__actions">
-                                <a href="/media/{{key.file.name}}" class="b-message-attach__actions-link" download>Скачать
+                                <a href="/media/{{file.file.name}}" class="b-message-attach__actions-link" download>Скачать
                                 </a>
                             </span>
                             <span class="b-message-attach__actions">
-                                <input type="button" onclick="createDoc();" name="create" value="открыть документ" tabindex="0" id="createdoc">
+                                <input type="button" class="b-message-attach__actions-link" onclick="createDoc();" name="create" value="открыть документ" tabindex="0" id="createdoc">
                                     <script type="text/javascript">
                                         function createDoc(event){
                                             console.log('click');
@@ -47,7 +47,7 @@
                                                 type:'POST',
                                                 data: { csrfmiddlewaretoken: "{{ csrf_token }}",
                                                         state:"inactive",
-                                                        file:"{{key.file.name}}"
+                                                        file:"{{file.file.name}}"
 
                                                       },
                                                 success:function(response){

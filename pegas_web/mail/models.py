@@ -5,6 +5,7 @@ from django.shortcuts import reverse
 
 class File(models.Model):
     file=models.FileField(upload_to="files/", default=None, blank=True, null=True)
+    encrypt_hash = models.BinaryField(default=None, null=True)
     # def get_absolute_url(self):
     #     return reverse('mail:document-detail', kwargs={'pk': self.pk})
 
@@ -18,11 +19,17 @@ class Message(models.Model):
     date = models.DateTimeField(auto_now_add=True, auto_now=False)
     files = models.ManyToManyField(File, related_name="files", default=None, blank=True)
     draft = models.BooleanField(default=False, blank=True,null=True)
+    in_route = models.BooleanField(default=False)
+    is_deleted = models.BooleanField(default=False, blank=True, null=True)
+    is_truly_deleted = models.BooleanField(default=False, blank=True, null=True)
+    is_favourite = models.BooleanField(default=False, blank=True, null=True)
 
     def get_absolute_url(self):
         return reverse("message_detail", kwargs={"pk": self.id})
-<<<<<<< Updated upstream
-=======
+    
+    class Meta:
+        ordering = ['-date']
+
 
 class Road(models.Model):
     creator=models.ForeignKey(User,on_delete=models.CASCADE,related_name="creator", default=None)
@@ -50,6 +57,9 @@ class Tags(models.Model):
     tag = models.CharField(max_length=20)
     name_tag = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.name_tag
+
 class Templates(models.Model):
     title = models.CharField(max_length=300)
     file = models.FileField()
@@ -58,5 +68,3 @@ class Templates(models.Model):
     def get_absolute_url(self):
         return reverse("template_detail", kwargs={"pk": self.id})
 
-
->>>>>>> Stashed changes

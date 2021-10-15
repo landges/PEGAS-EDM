@@ -8,9 +8,6 @@ class MessageAdmin(admin.ModelAdmin):
 
 @admin.register(File)
 class FileAdmin(admin.ModelAdmin):
-<<<<<<< Updated upstream
-    list_display = ('id',)
-=======
     list_display = ('id',)
 
 @admin.register(Road)
@@ -36,4 +33,3 @@ class TemplatesAdmin(admin.ModelAdmin):
 
 
 
->>>>>>> Stashed changes

@@ -18,7 +18,7 @@
     <!--[if lt IE 8]><link xmlns:fn="http://www.w3.org/2005/02/xpath-functions" type="text/css" rel="stylesheet" href="https://yastatic.net/s3/mail/lite/3.3.1/pages/messages/_messages_lite.ie.css"><![endif]-->
     <script type="text/javascript" async="" src="{% static 'scripts/watch.js'%}"></script>
     <script type="text/javascript" src="{% static 'scripts/context.js'%}" async=""></script>
-
+    <script type="text/javascript" src="{% static 'scripts/select_msg.js'%}" async=""></script>
     <script charset="utf-8" src="{% static 'scripts/7327631eb8edafd80c8b.js'%}"
         crossorigin="anonymous" importance="high"></script>
     <script async="" crossorigin="anonymous" src="{% static 'scripts/host.js'%}"></script>
@@ -105,27 +105,28 @@
             <div class="b-layout__left">
                 <div class="b-folders">
                     <div role="navigation" aria-label="Папки"><span class="b-folders__folder b-folders__folder_current">
+                        <span class="b-folders__folder {%if type_m == 'inbox'%}b-folders__folder_current{% endif %}">
                             <span class="b-folders__folder__name"><a class="b-folders__folder__link"
                                     href="{%url 'messages'%}?type=inbox"
                                     aria-label="Входящие, нет новых писем"><span aria-hidden="true"
-                                        role="presentation">Входящие</span></a></span></span> <span
-                            class="b-folders__folder"> <span class="b-folders__folder__name"><a
-                                    class="b-folders__folder__link" href="{%url 'messages'%}?type=sent"
-                                    aria-label="Отправленные, нет новых писем"><span aria-hidden="true"
-                                        role="presentation">Отправленные</span></a></span></span> <span
-                            class="b-folders__folder"> <span class="b-folders__folder__name"><a
+                                        role="presentation">Входящие</span></a></span></span> 
+                        <span class="b-folders__folder {%if type_m == 'sent'%}b-folders__folder_current{% endif %}"> <span class="b-folders__folder__name"><a
+                                class="b-folders__folder__link" href="{%url 'messages'%}?type=sent"
+                                aria-label="Отправленные, нет новых писем"><span aria-hidden="true"
+                                    role="presentation">Отправленные</span></a></span></span> 
+                        <span class="b-folders__folder {%if type_m == 'trash'%}b-folders__folder_current{% endif %}"> <span class="b-folders__folder__name"><a
                                     class="b-folders__folder__link" href="{%url 'messages'%}?type=trash"
                                     aria-label="Удалённые, нет новых писем"><span aria-hidden="true"
                                         role="presentation">Удалённые</span></a></span></span> <span
-                            class="b-folders__folder"> <span class="b-folders__folder__name"><a
-                                    class="b-folders__folder__link" href="{%url 'messages'%}?type=spam"
-                                    aria-label="Спам, нет новых писем"><span aria-hidden="true"
-                                        role="presentation">Спам</span></a></span></span> <span
-                            class="b-folders__folder"> <span class="b-folders__folder__name"><a
+                            class="b-folders__folder {%if type_m == 'favourite'%}b-folders__folder_current{% endif %}"> <span class="b-folders__folder__name"><a
+                                    class="b-folders__folder__link" href="{%url 'messages'%}?type=favourite"
+                                    aria-label="Избранные, нет новых писем"><span aria-hidden="true"
+                                        role="presentation">Избранные</span></a></span></span> <span
+                            class="b-folders__folder {%if type_m == 'draft'%}b-folders__folder_current{% endif %}"> <span class="b-folders__folder__name"><a
                                     class="b-folders__folder__link" href="{%url 'messages'%}?type=draft"
                                     aria-label="Черновики, нет новых писем"><span aria-hidden="true"
                                         role="presentation">Черновики</span></a></span></span><span
-                            class="b-folders__folder b-folders__folder_nesting1"> <span
+                            class="b-folders__folder b-folders__folder_nesting1 {%if type_m == 'template'%}b-folders__folder_current{% endif %}"> <span
                                 class="b-folders__folder__name"><a class="b-folders__folder__link"
                                     href="{%url 'messages'%}?type=template"
                                     aria-label="Шаблоны, нет новых писем"><span aria-hidden="true"
@@ -156,7 +157,13 @@
                                 class="b-toolbar__col"><input name="tospam" type="submit" value="Это спам"
                                     class="b-toolbar__but b-toolbar__but__i" aria-label="Это спам"></span><span
                                 class="b-toolbar__col"><input name="mark" type="submit" value="Прочитано"
-                                    class="b-toolbar__but b-toolbar__but__i" aria-label="Прочитано"></span><span
+                                    class="b-toolbar__but b-toolbar__but__i" aria-label="Прочитано"></span>
+                                {% if userisboss == True %}
+                                    <span class="b-toolbar__col"><a class="b-toolbar__but"
+                                        href="{%url 'create_route'%}" name="" aria-label="Создать маршрут"
+                                        role="button"><i class="b-toolbar__but__i">Создать маршрут</i></a></span>
+                                {% endif %}
+                                    <span
                                 class="b-toolbar__col js-dropdown b-toolbar__col_type_last"
                                 data-params="dir=sinked&amp;width=70%"><input name="more" type="submit" value="Ещё…"
                                     class="b-toolbar__but b-toolbar__but__i" aria-label="Ещё…">
@@ -177,8 +184,9 @@
                                 <table>
                                     <tbody>
                                         <tr>
-                                            <td class="l"><input name="request" value="" type="search"
-                                                    placeholder="Поиск писем"></td>
+                                            <td class="l">
+                                                <input name="request" value="{{search_query}}" type="search" placeholder="Поиск писем">
+                                            </td>
                                             <td class="r"><input type="submit" name="search" value="Найти" tabindex="0">
                                             </td>
                                         </tr>

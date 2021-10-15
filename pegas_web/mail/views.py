@@ -2,9 +2,6 @@ from django.shortcuts import redirect, render
 from django.views.generic.base import View
 from django.views.generic import ListView, DetailView
 from .models import *
-<<<<<<< Updated upstream
-from .forms import DocumentForm, FileForm
-=======
 from passport.models import *
 from .forms import DocumentForm, FileForm, RoadForm
 import hashlib
@@ -16,40 +13,87 @@ from docx import Document
 from django.http import JsonResponse
 from django.core.files.storage import FileSystemStorage
 from docxtpl import DocxTemplate
->>>>>>> Stashed changes
+from django.core.paginator import Paginator
+from django.db.models import Q
 
 # Create your views here.
 def main(request):
     return render(request,'mail/massages.html')
 
+def pagination(request, objects_list, count_of_page):
+    paginator = Paginator(objects_list, count_of_page)
+    page_number = request.GET.get('page_number', 1)
+    page = paginator.get_page(page_number)
+    is_paginated = page.has_other_pages()
+
+    if page.has_previous():
+        prev_url = 'page_number={0}'.format(page.previous_page_number())
+    else:
+        prev_url = ''
+
+    if page.has_next():
+        next_url = 'page_number={0}'.format(page.next_page_number())
+    else:
+        next_url = ''
+    return (page, is_paginated, prev_url, next_url)
+
 class Mail(View):
     def get(self, request):
+        if request.user.groups.filter(name="boss").exists():
+            userisboss = True
+        else:
+            userisboss = False
         type_m=request.GET.get('type', 'inbox')
-        print(type_m, 'MAIL')
         user = User.objects.get(username=request.user)
         messages=[]
-        if type_m == 'inbox':
-            messages = Message.objects.filter(receiver=user)
-        elif type_m == 'sent':
-            messages = Message.objects.filter(sender=user)
-        elif type_m == 'draft':
-            messages = Message.objects.filter(draft=True)
-<<<<<<< Updated upstream
-        return render(request,'mail/messages.html',context={"messages":messages.order_by("-date"),"type_m":type_m})
-=======
-        elif type_m == 'template':
-            templates = Templates.objects.all()
-            return render(request,'mail/templates.html', context={"templates":templates,"type_m":type_m, "userisboss":userisboss})
-        return render(request,'mail/messages.html',context={"messages":messages.order_by("-date"),"type_m":type_m, "userisboss":userisboss})
->>>>>>> Stashed changes
+        search_query = request.GET.get('request', '')
+        if search_query:
+            messages = Message.objects.filter(
+                Q(sender__username__icontains=search_query) |
+                Q(receiver__username__icontains=search_query) |
+                Q(topic__icontains=search_query) |
+                Q(text_message__icontains=search_query)).order_by('date')
+        else:
+            if type_m == 'inbox':
+                messages = Message.objects.filter(receiver=user)
+            elif type_m == 'sent':
+                messages = Message.objects.filter(sender=user)
+            elif type_m == 'draft':
+                messages = Message.objects.filter(draft=True)
+            elif type_m == 'template':
+                templates = Templates.objects.all()
+                return render(request,'mail/templates.html', context={"templates":templates,"type_m":type_m, "userisboss":userisboss})
+        (page, is_paginated, prev_url, next_url) = pagination(request, messages, 20)
+        return render(request,'mail/messages.html',context={"messages":page.object_list,
+                                                            "type_m":type_m, 
+                                                            "userisboss":userisboss,
+                                                            "search_query": search_query,
+                                                            "prev_url": prev_url,
+                                                            "next_url": next_url}
+                                                            )
     
     def post(self,request):
-        pass
+        msg_ids = request.POST.get('msgs[]', [])
+        if request.POST.get('type', None) == 'delete':
+            for id in msg_ids:
+                msg = Message.objects.get(id=id)
+                if msg.is_deleted:
+                    msg.is_truly_deleted = True
+                else:
+                    msg.is_deleted = True
+                msg.save()
+            return JsonResponse({"complete": True,
+                                 }, status=200)
+        elif request.POST.get('type', None) == 'tofavourite':
+            for id in msg_ids:
+                msg = Message.objects.get(id=id)
+                msg.is_favourite = True
+                msg.save()
+            return JsonResponse({"complete": True,
+                                 }, status=200)
+        else:
+            return JsonResponse({"complete": False}, status=200)
 
-<<<<<<< Updated upstream
-class MessageDetailView(DetailView):
-    model = Message
-=======
 class MessageDetailView(View):
     def get(self,request,pk):
         fileform = FileForm()
@@ -105,7 +149,6 @@ def nextsteproad(request):
             route_id=route.route)
         rmj.save()
     return redirect("messages")
->>>>>>> Stashed changes
 
 
 class Compose(View):
@@ -115,38 +158,20 @@ class Compose(View):
         return render(request,'mail/compose.html',context={"fileform":fileform,"mform":mform})
 
     def post(self, request):
-        data = request.POST.copy()
-        fileform = FileForm(request.POST, request.FILES)
-        receiver = User.objects.filter(username = request.POST['receiver']).first()
-        if receiver:
-            data.update({"receiver":receiver.id})
-        else:
-            data.update({"draft":True})
-        form = DocumentForm(data, request.FILES)
         sender = User.objects.filter(username=request.user).first()
-        form.instance.sender = sender
-        if form.is_valid():
-            message = form.save()
-            files = request.FILES.getlist('file')
-            if fileform.is_valid():
-                for f in files:
-                    file = File.objects.create(file=f)
-                    message.files.add(file)
-                message.save()
-            return redirect("messages")
+        receiver = User.objects.filter(username = request.POST['receiver']).first()
+        t_or_f = message_in_route(request, sender, receiver)
+        if t_or_f == False:
+            return render(request,'mail/compose.html') 
         else:
-<<<<<<< Updated upstream
-            return render(request,'mail/compose.html',context={"fileform":fileform,"mform":form})
-=======
-            return False
-
+            return redirect("messages")
 
 class CreateDocument(View):
     def post(self,request):
         print(request.POST)
         try:
             file_path = request.POST['file']
-            os.system('start ' + 'media/' + file_path)
+            os.system('start ' + 'media\\' + file_path)
         except KeyError:
             os.system('start docx/New.docx')
         return JsonResponse({"status": "OK"})
@@ -185,4 +210,89 @@ def create_file(request):
     # user_list = request.POST.getlist()
     # print(user_list)
     return redirect("compose")
->>>>>>> Stashed changes
+
+class Create_Route(View):
+    def get(self, request):
+        fileform = FileForm()
+        mform = DocumentForm()
+        rform = RoadForm()
+        return render(request,'mail/create_route.html',context={"fileform":fileform,"mform":mform, "rform":rform})
+
+    def post(self, request):
+        data = request.POST.copy()
+        user_list=request.POST.getlist('node[]')
+        creator = User.objects.get(username=request.user)
+        receiver = User.objects.filter(username=user_list[0]).first()
+        user_pairs = list()
+        for i in range(len(user_list)):
+            pair = list()
+            if i != len(user_list)-1:
+                pair.append(user_list[i])
+                pair.append(user_list[i+1])
+            else:
+                pair.append(user_list[i])
+                pair.append(None)
+            user_pairs.append(pair)
+        road=Road(creator=creator)
+        road.save()
+        usinroute = UserInRoute(
+                    route=road,
+                    prevus=User.objects.get(username=request.user),
+                    nextus=User.objects.get(username=user_pairs[0][0])
+                    )
+        usinroute.save()
+        for i in range(len(user_pairs)):
+            if user_pairs[i][1] is not None:
+                usinroute = UserInRoute(
+                    route=road,
+                    prevus=User.objects.get(username=user_pairs[i][0]),
+                    nextus=User.objects.get(username=user_pairs[i][1])
+                    )
+            else:
+                usinroute = UserInRoute(
+                    route=road,
+                    prevus=User.objects.get(username=user_pairs[i][0])
+                    )
+            usinroute.save()
+        msg = message_in_route(request, creator, receiver)
+        if msg == False:
+            return render(request,'mail/create_route.html')
+        message = Message.objects.filter(id=msg).first()
+        message.in_route = True
+        message.save()
+        rmj = RouteMessageJournal(
+            prev_user=creator,
+            next_user=receiver,
+            message_id=message,
+            route_id=road)
+        rmj.save()
+        return redirect("messages")
+
+def message_in_route(request, sender, receiver):
+        data = request.POST.copy()
+        if receiver:
+            data.update({"receiver":receiver.id})
+        else:
+            data.update({"draft":True})
+        fileform = FileForm(request.POST, request.FILES)
+        form = DocumentForm(data, request.FILES)
+        form.instance.sender = sender
+        if form.is_valid():
+            message = form.save()
+            files = request.FILES.getlist('file')
+            if fileform.is_valid():
+                for f in files:
+                    data = f.read()
+                    hash_file = hashlib.md5(bytes(data)).hexdigest()
+                    private_key = sender.profile.private_key
+                    key = RSA.import_key(private_key)
+                    cipher_rsa = PKCS1_OAEP.new(key)
+                    ciphertext = cipher_rsa.encrypt(bytearray(hash_file, encoding='utf-8'))
+                    file = File.objects.create(file=f, encrypt_hash=ciphertext)
+                    message.files.add(file)
+                if request.POST.get('id_route') != '':
+                    message.in_route=True
+                message.save()
+                return message.id
+        else:
+            return False

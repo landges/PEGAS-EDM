@@ -113,13 +113,29 @@
         role="presentation">Страницы
     </span> 
     <span class="b-pager__links">
+        {% if prev_url %}
+        <span class="b-pager__active">
+            <a class="b-pager__prev"
+                href="?{{prev_url}}"
+                aria-label="Предыдущая страница">
+                <span aria-hidden="true"role="presentation">
+                    <i class="b-pager__arr">←</i>
+                    предыдущая&nbsp;
+
+                </span>
+            </a>
+        </span>
+        {% else %}
         <span class="b-pager__inactive b-pager__left" aria-hidden="true" role="presentation">
             <i class="b-pager__arr">←</i>
             &nbsp;предыдущая
         </span>
+        {% endif %}
+        {% if next_url %}
         <span class="b-pager__active">
             <a class="b-pager__next"
                 href="https://mail.yandex.ru/lite/inbox/page_number=2"
+                href="?{{next_url}}"
                 aria-label="Следующая страница">
                 <span aria-hidden="true"
                     role="presentation">следующая&nbsp;
@@ -127,6 +143,12 @@
                 </span>
             </a>
         </span>
+        {% else %}
+        <span class="b-pager__inactive b-pager__right" aria-hidden="true" role="presentation">
+            &nbsp;следующая
+            <i class="b-pager__arr">→</i>
+        </span>
+        {% endif %}
     </span>
-    </div>
+</div>
 {%endblock%}
