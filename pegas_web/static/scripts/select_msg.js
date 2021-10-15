@@ -50,6 +50,7 @@ $(document).ready(function () {
 	 					console.log(msgs_2del[i]);
 	 					$(msgs_2del[i]).remove();
 	 				}
+	 				
 	 			}
 	 		},
 	 		error: function (response) {

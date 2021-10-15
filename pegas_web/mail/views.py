@@ -5,6 +5,7 @@ from .models import *
 from .forms import DocumentForm, FileForm
 from django.db.models import Q
 from django.http import JsonResponse
+from django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -12,11 +13,39 @@ def main(request):
     return render(request, 'mail/messages.html')
 
 
+def pagination(request, objects_list, count_of_page):
+    paginator = Paginator(objects_list, count_of_page)
+    page_number = request.GET.get('page_number', 1)
+    page = paginator.get_page(page_number)
+    is_paginated = page.has_other_pages()
+
+    if page.has_previous():
+        prev_url = 'page_number={0}'.format(page.previous_page_number())
+    else:
+        prev_url = ''
+
+    if page.has_next():
+        next_url = 'page_number={0}'.format(page.next_page_number())
+    else:
+        next_url = ''
+    return (page, is_paginated, prev_url, next_url)
+
+
 class Mail(View):
     def get(self, request):
         type_m = request.GET.get('type', 'inbox')
         user = User.objects.get(username=request.user)
         messages = []
+        if request.is_ajax():
+            msg_ids = request.POST.get('msgs[]', [])
+            if request.GET.get('type', None) == 'delete':
+                for id in msg_ids:
+                    msg = Message.objects.get(id=id)
+                    if msg.is_deleted:
+                        msg.is_truly_deleted = True
+                    else:
+                        msg.is_deleted = True
+                    msg.save()
         search_query = request.GET.get('request', '')
         if search_query:
             messages = Message.objects.filter(
@@ -37,8 +66,11 @@ class Mail(View):
             elif type_m == 'favourite':
                 messages = Message.objects.filter((Q(receiver=user) | Q(sender=user)), favourite=True, is_deleted=False,
                                                   is_truly_deleted=False)
-
-        return render(request, 'mail/messages.html', context={"messages": messages.order_by("-date"), "type_m": type_m})
+        (page, is_paginated, prev_url, next_url) = pagination(request, messages, 20)
+        return render(request, 'mail/messages.html', context={"msgd_disp": page.object_list, "type_m": type_m,
+                                                              "search_query": search_query,
+                                                              "prev_url": prev_url,
+                                                              "next_url": next_url})
 
     def post(self, request):
         msg_ids = request.POST.get('msgs[]', [])

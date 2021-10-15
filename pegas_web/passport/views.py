@@ -16,7 +16,7 @@ class Regestration(View):
     def post(self, request):
         form = SignUpForm(request.POST)
         if form.is_valid():
-            user=form.save()
+            user = form.save()
             user.refresh_from_db()
             form2 = ProfileForm(request.POST)
             #newly added
@@ -32,6 +32,7 @@ class Regestration(View):
             login(request, user)
             return redirect('/mail/messages/')
         else:
+            print(form.errors)
             return redirect('/passport/welcome/')
 
 def logout_view(request):

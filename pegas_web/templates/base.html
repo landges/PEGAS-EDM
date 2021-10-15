@@ -160,7 +160,7 @@
                                             {% csrf_token %}
                                             <tr>
                                                 <td class="l">
-                                                    <input name="request" value="" type="search" placeholder="Поиск писем">
+                                                    <input name="request" value="{{search_query}}" type="search" placeholder="Поиск писем">
                                                 </td>
                                                 <td class="r">
                                                     <input type="submit" name="search" value="Найти" tabindex="0">
