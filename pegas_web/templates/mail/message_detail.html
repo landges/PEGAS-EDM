@@ -33,12 +33,29 @@
                                 <em class="b-message-attach__width"></em>
                             </span>
                             <span class="b-message-attach__actions">
-                                <a href="{{file.file.url}}" class="b-message-attach__actions-link" download>Скачать
+                                <a href="/media/{{key.file.name}}" class="b-message-attach__actions-link" download>Скачать
                                 </a>
                             </span>
                             <span class="b-message-attach__actions">
-                                <a href="{{file.file.url}}" class="b-message-attach__actions-link" target="_blank" rel="noopener noreferrer">Открыть
-                                </a>
+                                <input type="button" onclick="createDoc();" name="create" value="открыть документ" tabindex="0" id="createdoc">
+                                    <script type="text/javascript">
+                                        function createDoc(event){
+                                            console.log('click');
+                                            //event.preventDefault();
+                                            $.ajax({
+                                                url:"/mail/createdoc/",
+                                                type:'POST',
+                                                data: { csrfmiddlewaretoken: "{{ csrf_token }}",
+                                                        state:"inactive",
+                                                        file:"{{key.file.name}}"
+
+                                                      },
+                                                success:function(response){
+                                                    console.log(response);
+                                                }
+                                            })
+                                        }
+                                    </script>
                             </span>
                             <input name="parts" value="1.2" type="hidden">
                         </div>

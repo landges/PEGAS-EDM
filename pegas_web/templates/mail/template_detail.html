@@ -1,0 +1,97 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block title%}
+{%endblock%}
+{%block content%}
+        <div class="b-message" role="main" aria-label="Рабочая область">
+            <div class="b-message-head">
+                <form method="post" action="{%url 'create_file'%}" enctype="multipart/form-data">
+                {%csrf_token%}
+
+                <div class="a">
+                    <div class="b-message-head__top">
+                        <div class="b-message-head__subject"><span class="b-message-head__subject-text">{{template.title}}</span>
+                        </div><span class="b-message-head__field b-message-head__field_date" style="font-size:1.5em"><em
+                                class="b-message-head__field-name">Название:
+                            </em> <span class="b-message-head__date" style="color:black;" name="a1">{{template.title}}</span></span>
+                    </div>
+                </div>
+
+
+                <div class="b-message-attach js-attachments" style="font-size:1.5em">
+                        <div class="b-message-attach__i js-attachment">
+                            <span class="b-message-attach__info" >
+                                    <img alt="" src="/static/img/galochka.png" class="b-message-attach__info-icon" width="20" height="20">
+                                    <img alt="" src="/static/img/b-mail-icon_file-general.gif" width="20" height="20" class="b-message-attach__info-icon">
+                                    {{file}}
+                                    <em class="b-message-attach__width"></em>
+                            </span>
+                            <span class="b-message-attach__actions">
+                                <a href="/docx/{{file}}" class="b-message-attach__actions-link" download="">Скачать
+                                </a>
+                            </span>
+
+                            <input name="file" value="{{file}}" type="hidden">
+                        </div>
+
+                    </div>
+
+
+
+                <table class="b-compose-head" style="font-size:1.5em">
+                    <tbody>
+                        {% for tag in tags%}
+                        <tr class="b-compose-head__field ">
+                            <td class="b-compose-head__field__name">
+                                <label class="b-form-label" for="id1166037212615">{{tag.name_tag}}</label></td>
+                            <td class="b-compose-head__field__value">
+                                <div class="b-form-input">
+                                    <div class="b-form-input__box">
+                                        <!-- <input id="id1166037212615" class="b-form-input__input" name="to" autocorrect="off" autocomplete="off" value=""> -->
+                                        <input type="text" style="width:500px" name="{{tag.tag}}" class="b-form-input__input" id="id_receiver">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        {%endfor%}
+                        <tr class="b-compose-head__field ">
+                                <td class="b-compose-head__field__name">
+                                    <label class="b-form-label" for="id1166037212615">Путь для нового файла</label></td>
+                                <td class="b-compose-head__field__value">
+                                    <div class="b-form-input">
+                                        <div class="b-form-input__box">
+                                            <!-- <input id="id1166037212615" class="b-form-input__input" name="to" autocorrect="off" autocomplete="off" value=""> -->
+                                            <input type="text" style="width:500px" name="path" class="b-form-input__input" id="id_receiver">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                    </tbody>
+                </table>
+                    <input class="b-form-button b-compose__c" type="submit" name="templ_create" value="Создать файл">
+                </form>
+
+                <div class="b-message-pager"><span class="b-message-pager__active b-message-pager__left"><a
+                            href="https://mail.yandex.ru/lite/message/174795960537318010/"
+                            class="b-message-pager__prev"><i class="b-message-pager__arr">←&nbsp;</i><span
+                                class="b-message-pager__prev_txt">предыдущий шаблон</span></a></span><span
+                        class="b-message-pager__active"><a
+                            href="https://mail.yandex.ru/lite/message/174795960537317997/"
+                            class="b-message-pager__next"><span class="b-message-pager__next_txt">следующий
+                                шаблон</span><i class="b-message-pager__arr">&nbsp;→</i></a></span></div>
+            </div>
+        </div>
+
+
+{%endblock%}
+<!--                             {% if message.in_route == True %}
+                                <div class="b-message-reply__form-act_true"><input name="doit1" value="Отправить далее по маршруту"
+                                        class="b-form-button" type="submit"></div> 
+                            {% else %}                           
+                                <div class="b-message-reply__form-act_false"><input name="doit2" value="Отправить"
+                                        class="b-form-button" type="submit"></div>
+                            {% endif %} -->
+<!-- 
+
+                                <div else class="b-message-reply__form-act_false"><input name="doit2" value="Отправить"
+                                        class="b-form-button" type="submit"></div> -->

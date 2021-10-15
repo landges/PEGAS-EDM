@@ -7,4 +7,12 @@ urlpatterns = [
     path("message/<int:pk>/", MessageDetailView.as_view(), name="message_detail"),
     path("messages/", Mail.as_view(), name="messages"),
     path("compose/", Compose.as_view(),name="compose"),
+<<<<<<< Updated upstream
+=======
+    path("create_route/", Create_Route.as_view(),name="create_route"),
+    path("nextroad/", nextsteproad, name="nextroad"),
+    path("createdoc/",CreateDocument.as_view(), name="doc"),
+    path("templates/<int:pk>/", TemplateView.as_view(), name='template_detail'),
+    path("create_file/", create_file, name="create_file")
+>>>>>>> Stashed changes
 ]

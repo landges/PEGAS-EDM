@@ -1,5 +1,9 @@
 from django.forms import fields, widgets
+<<<<<<< Updated upstream
 from .models import File, Message
+=======
+from .models import File, Message, Road, Templates
+>>>>>>> Stashed changes
 from django import forms
 
 
@@ -20,4 +24,24 @@ class FileForm(forms.ModelForm):
         fields = ('file',)
         widgets = {
             "file":forms.ClearableFileInput(attrs={'multiple': True,"class":"b-compose__file"})
+<<<<<<< Updated upstream
         }
+=======
+        }
+
+# class TemplateCreate(forms.ModelForm):
+#     class Meta:
+#         model = Templates
+#         fields = ('file',)
+#         widgets = {
+#             "file":forms.ClearableFileInput(attrs={'multiple': True,"class":"b-compose__file_create"})
+#         }
+
+class RoadForm(forms.ModelForm):
+    class Meta:
+        model = Road
+        fields = ('id',)
+        # widgets = {
+        #     "user_in_route": forms.TextInput(attrs={"class":"form_for_route"}) 
+        # }
+>>>>>>> Stashed changes

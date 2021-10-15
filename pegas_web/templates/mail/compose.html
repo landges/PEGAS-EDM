@@ -71,11 +71,37 @@
             </table>
             {{mform.text_message}}
             <!-- <textarea class="b-form-textarea" name="send" id="compose-send" cols="30" rows="10" aria-label="Тело письма"></textarea> -->
+                 <input type="button" onclick="createDoc();" name="create" value="создать документ" tabindex="0" id="createdoc">
+                <script type="text/javascript">
+                    function createDoc(event){
+                        console.log('click');
+                        //event.preventDefault();
+                        $.ajax({
+                            url:"/mail/createdoc/",
+                            type:'POST',
+                            data: { csrfmiddlewaretoken: "{{ csrf_token }}",
+                                    state:"inactive"
+                                  },
+                            success:function(response){
+                                console.log(response);
+                            }
+                        })
+                    }
+                </script>
             <div class="b-buttons">
                 {{fileform.file}}
+<<<<<<< Updated upstream
                 <input class="b-form-button b-compose__send" type="submit" name="doit" value="Отправить">
                 <input class="b-form-button b-compose__draft" type="submit" name="nosend" value="Сохранить">
                 <input class="b-form-button b-compose__cancel" type="submit" name="cancel" value="Отмена">
+=======
+                    <input class="b-form-button b-compose__send" type="submit" name="doit" value="Отправить">
+                    <input class="b-form-button b-compose__draft" type="submit" name="nosend" value="Сохранить">
+                    <input class="b-form-button b-compose__cancel" type="submit" name="cancel" value="Отмена">
+ <!--                { if user.is_chief } -->
+<!--                     <input class="b-form-button b-compose__tr" type="submit" name="tr" value="Создать маршрут"> -->
+<!--                 { endif } -->
+>>>>>>> Stashed changes
             </div>
         </div>
         </form>

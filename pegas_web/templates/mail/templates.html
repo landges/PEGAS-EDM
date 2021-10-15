@@ -1,0 +1,66 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block title%}
+Входящие
+{%endblock%}
+{%block content%}
+    <div id="main" role="main" aria-label="Рабочая область">
+        <input type="hidden" name="_ckey" value="Y9MpI8J3LItmQPK9pcEB8p2GB2Y=!ktbuv2q1">
+        <input type="hidden" name="_handlers" value="do-messages">
+        <input type="hidden" name="retpath" value="/">
+        
+    <div class="b-messages">
+        {%for template in templates%}
+            <div class="b-messages__message">
+                <!--<label class="b-messages__message__checkbox">-->
+                    <!--<input type="checkbox" name="ids" class="b-form-checkbox" value="176766285374292674" aria-label=" Получено {{message.date|date:'d m '}}">-->
+                <!--</label>-->
+                <!---->
+                <!--&lt;!&ndash; <div class="b-messages__message__flag" aria-hidden="true"></div> &ndash;&gt;-->
+                <!--<span class="b-messages__date" role="presentation" aria-hidden="true" title="Получено {{message.date|date:'d m '}} в {{message.date|timesince}}">-->
+                    <!--<span>{{message.date|date:"d b"}}</span>-->
+                <!--</span> -->
+                <span class="b-messages__message__left" href="{{template.get_absolute_url}}" >
+                    <a class="b-messages__from" href="{{template.get_absolute_url}}" style="width:1500px" aria-label="название: {{template.title}}">
+                        <span class="b-messages__from__text" aria-hidden="true" role="presentation">
+                            <span class="b-messages__from__text" style=" font-size: 1.5em;">{{template.title}}</span>
+                        </span>
+                    </a> 
+                    <!--<a href="{{message.get_absolute_url}}" class="b-messages__message__link" aria-label="{{message.topic}}">-->
+                        <!--<span aria-hidden="true" role="presentation">-->
+                            <!--<span class="b-messages__subject">-->
+                                <!--<span>{{message.topic}}</span>-->
+                            <!--</span> -->
+                            <!--<span class="b-messages__firstline">-->
+                                <!--{{message.text_message}}-->
+                            <!--</span>&nbsp;-->
+                        <!--</span>-->
+                    <!--</a>-->
+                </span>
+            </div>
+        {%endfor%}
+
+    </div>
+    </div>
+    <div class="b-pager">
+    <span class="b-pager__title" aria-hidden="true"
+        role="presentation">Страницы
+    </span> 
+    <span class="b-pager__links">
+        <span class="b-pager__inactive b-pager__left" aria-hidden="true" role="presentation">
+            <i class="b-pager__arr">←</i>
+            &nbsp;предыдущая
+        </span>
+        <span class="b-pager__active">
+            <a class="b-pager__next"
+                href="https://mail.yandex.ru/lite/inbox/page_number=2"
+                aria-label="Следующая страница">
+                <span aria-hidden="true"
+                    role="presentation">следующая&nbsp;
+                    <i class="b-pager__arr">→</i>
+                </span>
+            </a>
+        </span>
+    </span>
+    </div>
+{%endblock%}

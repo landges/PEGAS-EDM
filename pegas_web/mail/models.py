@@ -21,3 +21,42 @@ class Message(models.Model):
 
     def get_absolute_url(self):
         return reverse("message_detail", kwargs={"pk": self.id})
+<<<<<<< Updated upstream
+=======
+
+class Road(models.Model):
+    creator=models.ForeignKey(User,on_delete=models.CASCADE,related_name="creator", default=None)
+    date_creation = models.DateTimeField(auto_now_add=True, auto_now=False)
+    # user_route = models.ManyToManyField(User, related_name="user_roat")
+
+class UserInRoute(models.Model):
+    route = models.ForeignKey(Road,on_delete=models.CASCADE,related_name="road", default=None)
+    prevus = models.ForeignKey(User,on_delete=models.CASCADE,related_name="prevus", default=None)
+    nextus = models.ForeignKey(User,on_delete=models.CASCADE,related_name="nextus", default=None, blank=True, null=True)
+    u_sequence = models.IntegerField(blank=True, null=True, default=None)
+
+    class Meta:
+        ordering = ['id',]
+
+class RouteMessageJournal(models.Model):
+    prev_user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="prev_user", default=None)
+    next_user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="next_user", default=None)
+    message_id = models.ForeignKey(Message,on_delete=models.CASCADE,related_name="message_id", default=None)
+    route_id = models.ForeignKey(Road,on_delete=models.CASCADE,related_name="road_id", default=None)
+    date = models.DateTimeField(auto_now_add=True, auto_now=False)
+
+
+class Tags(models.Model):
+    tag = models.CharField(max_length=20)
+    name_tag = models.CharField(max_length=50)
+
+class Templates(models.Model):
+    title = models.CharField(max_length=300)
+    file = models.FileField()
+    tags = models.ManyToManyField(Tags, related_name="tags", default=None, blank=True)
+
+    def get_absolute_url(self):
+        return reverse("template_detail", kwargs={"pk": self.id})
+
+
+>>>>>>> Stashed changes
