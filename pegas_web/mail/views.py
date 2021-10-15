@@ -36,16 +36,6 @@ class Mail(View):
         type_m = request.GET.get('type', 'inbox')
         user = User.objects.get(username=request.user)
         messages = []
-        if request.is_ajax():
-            msg_ids = request.POST.get('msgs[]', [])
-            if request.GET.get('type', None) == 'delete':
-                for id in msg_ids:
-                    msg = Message.objects.get(id=id)
-                    if msg.is_deleted:
-                        msg.is_truly_deleted = True
-                    else:
-                        msg.is_deleted = True
-                    msg.save()
         search_query = request.GET.get('request', '')
         if search_query:
             messages = Message.objects.filter(
@@ -74,8 +64,11 @@ class Mail(View):
 
     def post(self, request):
         msg_ids = request.POST.get('msgs[]', [])
+        if type(msg_ids) != list:
+            msg_ids = [msg_ids]
         if request.POST.get('type', None) == 'delete':
             for id in msg_ids:
+                print(id)
                 msg = Message.objects.get(id=id)
                 if msg.is_deleted:
                     msg.is_truly_deleted = True

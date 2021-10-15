@@ -5,6 +5,7 @@
 {%block content%}
         <div class="b-message" role="main" aria-label="Рабочая область">
             <div class="b-message-head">
+                <input type="hidden" name="msg_id" value="{{message.id}}">
                 <div class="b-message-head__top">
                     <div class="b-message-head__subject"><span class="b-message-head__subject-text">{{message.topic}}</span>
                     </div><span class="b-message-head__field b-message-head__field_date"><em
